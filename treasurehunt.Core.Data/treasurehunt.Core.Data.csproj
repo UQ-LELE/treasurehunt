@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="DataLayer\" />
-    <Folder Include="Models\Quetes\" />
   </ItemGroup>
 
 </Project>
