@@ -8,7 +8,14 @@ using treasurehunt.Core.Data.Models.Quetes;
 namespace treasurehunt.BackOffice.Web.UI.Controllers
 {
     public class QueteController : Controller
-    {    
+    {
+
+        public ActionResult Index()
+        {
+            return View();
+
+        }
+
         public ActionResult Create()
         {
             return View();

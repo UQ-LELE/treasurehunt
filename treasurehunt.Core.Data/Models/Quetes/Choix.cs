@@ -6,6 +6,8 @@ namespace treasurehunt.Core.Data.Models.Quetes
 {
     public class Choix
     {
+
+        public int ID { get; set; }
         /// <summary>
         /// Id de la question liée au choix
         /// </summary>
