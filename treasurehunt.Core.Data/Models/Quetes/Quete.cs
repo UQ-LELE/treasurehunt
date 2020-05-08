@@ -14,9 +14,6 @@ namespace treasurehunt.Core.Data.Models.Quetes
         [Required(AllowEmptyStrings = false, ErrorMessage = "Le titre est requis")]
         public string Titre { get; set; }
 
-        public ICollection<Evenement> EvenementsDeQuete { get; set; }
-        public ICollection<Question> QuestionsDeQuete { get; set; }
-        public ICollection<Choix> ChoixDeQuete { get; set; }
         #endregion
     }
 }

@@ -22,13 +22,15 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
 
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
+            
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Quete quete)
         {
             return View();
         }
