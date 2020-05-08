@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "treasurehunt.Web.UI", "treasurehunt.Web.UI\treasurehunt.Web.UI.csproj", "{ED6A4774-0D9D-436A-B303-7994F7173F22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{2199B4A7-E48F-4911-8D75-CB1BF9D0C760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "treasurehunt.Core.Data", "treasurehunt.Core.Data\treasurehunt.Core.Data.csproj", "{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "treasurehunt.BackOffice.Web.UI", "treasurehunt.BackOffice.Web.UI\treasurehunt.BackOffice.Web.UI.csproj", "{FF93F63B-E05E-428E-B5E9-F45251D81788}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED6A4774-0D9D-436A-B303-7994F7173F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED6A4774-0D9D-436A-B303-7994F7173F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED6A4774-0D9D-436A-B303-7994F7173F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED6A4774-0D9D-436A-B303-7994F7173F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF93F63B-E05E-428E-B5E9-F45251D81788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF93F63B-E05E-428E-B5E9-F45251D81788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF93F63B-E05E-428E-B5E9-F45251D81788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF93F63B-E05E-428E-B5E9-F45251D81788}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FCFA2354-E7D9-4AA5-99E6-D88C1F85CB79} = {2199B4A7-E48F-4911-8D75-CB1BF9D0C760}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF34353E-7FA7-441B-BBEB-8040E8DA7153}
+	EndGlobalSection
+EndGlobal
