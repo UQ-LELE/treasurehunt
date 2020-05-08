@@ -14,6 +14,6 @@ namespace treasurehunt.Core.Data.Models.Quetes
         /// <summary>
         /// Id de l'évènement suivant
         /// </summary>
-        public int? ParagrapheId { get; set; }
+        public int? EvenementId { get; set; }
     }
 }

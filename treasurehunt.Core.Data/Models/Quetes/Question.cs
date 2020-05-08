@@ -9,7 +9,7 @@ namespace treasurehunt.Core.Data.Models.Quetes
     {
         [Key]
         public int ID { get; set; }
-
+  
         /// <summary>
         /// Enoncé de la question
         /// </summary>

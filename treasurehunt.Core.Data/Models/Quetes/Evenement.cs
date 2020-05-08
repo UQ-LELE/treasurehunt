@@ -12,7 +12,7 @@ namespace treasurehunt.Core.Data.Models.Quetes
         public int Id { get; set; }
 
         /// <summary>
-        /// Numéro à afficher pour le jeu
+        /// Numéro de l'évènement
         /// </summary>
         [Range(1, 9999999)]
         public int Numero { get; set; }
