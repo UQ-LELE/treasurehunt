@@ -1,0 +1,19 @@
+﻿@model treasurehunt.Core.Data.Models.Quetes.Evenement
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col s12">
+        <!--Evenement-->
+        <partial name="_Evenement" for="@Model">
+            <!--Question-->
+            <partial name="_Question" for="@Model">
+                <!--Choix-->
+                <partial name="_Choix" for="@Model">
+                    <!--Objets-->
+                    <partial name="_Objets" for="@Model">
+    </div>
+</div>

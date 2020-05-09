@@ -3,18 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - treasurehunt.Web.UI</title>
+    <title>@ViewData["Title"] - Treasure Hunt !</title>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo right">Treasure Hunt BackOffice</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo right">Treasure Hunt !</a>
 
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Game" asp-action="Index">Game</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                 </ul>
             </div>
