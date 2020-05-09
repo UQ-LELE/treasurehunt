@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using treasurehunt.Core.Data.Models.Objets;
 
 namespace treasurehunt.Core.Data.Models
 {
