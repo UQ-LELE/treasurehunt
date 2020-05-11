@@ -24,6 +24,7 @@ namespace treasurehunt.Core.Data
         public DbSet<Evenement> Evenements { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Choix> Choixes { get; set; }
+        public DbSet<ActionChoix> ActionChoixes { get; set; }
         #endregion
 
         #region Personnages
@@ -47,6 +48,7 @@ namespace treasurehunt.Core.Data
             modelBuilder.Entity<Evenement>().ToTable("Evenement");
             modelBuilder.Entity<Question>().ToTable("Question");
             modelBuilder.Entity<Choix>().ToTable("Choix");
+            modelBuilder.Entity<ActionChoix>().ToTable("ActionChoix");
             modelBuilder.Entity<Personnage>().ToTable("Personnages");
             modelBuilder.Entity<ItemOnBag>().ToTable("ItemOnBag");
         }

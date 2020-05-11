@@ -14,8 +14,7 @@ namespace treasurehunt.Core.Data.Models.Quetes
         /// <summary>
         /// Numéro de l'évènement
         /// </summary>
-        [Range(1, 9999999)]
-        public int Numero { get; set; }
+        public string Numero { get; set; }
 
         /// <summary>
         /// Titre de l'évènement
@@ -37,12 +36,12 @@ namespace treasurehunt.Core.Data.Models.Quetes
         /// <summary>
         /// Question de l'évènement
         /// </summary>
-        public Question LaQuestion { get; set; }
+        public int QuestionId { get; set; }
 
         /// <summary>
         /// Liste des choix possibles
         /// </summary>
-        public IEnumerable<Choix> LesChoix { get; set; }
+       // public IEnumerable<Choix> LesChoix { get; set; }
         #endregion
 
     }

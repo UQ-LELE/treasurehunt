@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /treasurehunt.Core.Data/appsettings.json
+/treasurehunt.Web.UI/appsettings.json

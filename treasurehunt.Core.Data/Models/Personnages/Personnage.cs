@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using treasurehunt.Core.Data.Models.Objets;
+using treasurehunt.Core.Data.Models.Quetes;
 
 namespace treasurehunt.Core.Data.Models
 {
@@ -20,7 +21,13 @@ namespace treasurehunt.Core.Data.Models
 
         public int Attack { get; set; }
 
+        public bool IsDead { get; set; }
+
+        [NotMapped]
+        public List<string> choisesPath { get; set; }
+
         public abstract string SpecialAbility();
+
 
     }
 }

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace treasurehunt.Core.Data.Models.Quetes
 {
-    public class Question
+    public class ActionChoix
     {
-        [Key]
+
         public int ID { get; set; }
-  
         /// <summary>
-        /// Enoncé de la question
+        /// Enoncé de l'action
         /// </summary>
-        public string LaQuestion { get; set; }
+        public string ActionDuChoix { get; set; }
 
     }
 }

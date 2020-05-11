@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using treasurehunt.Core.Data;
 
 namespace treasurehunt.Core.Data.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20200509134227_upChoixQuestionEvenement")]
+    partial class upChoixQuestionEvenement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,21 +73,6 @@ namespace treasurehunt.Core.Data.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Personnage");
                 });
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.ActionChoix", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ActionDuChoix")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ActionChoix");
-                });
-
             modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.Choix", b =>
                 {
                     b.Property<int>("ID")
@@ -93,16 +80,10 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ActionChoixId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EvenementId")
                         .HasColumnType("int");
 
-                    b.Property<string>("EventNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NexEventNumber")
+                    b.Property<string>("LeChoix")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

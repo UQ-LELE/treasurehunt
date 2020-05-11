@@ -9,13 +9,18 @@ namespace treasurehunt.Core.Data.Models.Quetes
 
         public int ID { get; set; }
         /// <summary>
-        /// Id de la question liée au choix
+        /// Id du choix
         /// </summary>
-        public int QuestionId { get; set; }
+        public int ActionChoixId { get; set; }
+
+        /// <summary>
+        /// Numero de l'évènement attaché
+        /// </summary>
+        public string EventNumber { get; set; }
 
         /// <summary>
         /// Id de l'évènement suivant
         /// </summary>
-        public int? EvenementId { get; set; }
+        public string NexEventNumber { get; set; }
     }
 }
