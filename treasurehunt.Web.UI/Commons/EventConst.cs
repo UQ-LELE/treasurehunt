@@ -79,7 +79,6 @@ namespace treasurehunt.Web.UI.Commons
         public const string Event435 = "E435X"; //You die in a hole
         #endregion
 
-
         #region Events 541
         public const string Event541 = "E541X"; //You die in a hole
         #endregion

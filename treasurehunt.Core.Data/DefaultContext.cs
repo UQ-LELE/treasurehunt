@@ -31,14 +31,14 @@ namespace treasurehunt.Core.Data
         public DbSet<Humain> Humains { get; set; }
         public DbSet<Elfe> Elfes { get; set; }
         public DbSet<Nain> Nains { get; set; }
+        public DbSet<Rat> Rats { get; set; }
+        public DbSet<Spider> Spiders { get; set; }
+        public DbSet<Bear> Bears { get; set; }
+        public DbSet<Dragon> Dragons { get; set; }
         #endregion
 
         #region Objets
-        public DbSet<ItemOnBag> ItemsOnBag { get; set; }
-        public DbSet<DragonTooth> DragonTeeth { get; set; }
-        public DbSet<Elixir> Elixirs { get; set; }
-        public DbSet<KeyTreasure> KeyTreasures { get; set; }
-        public DbSet<Sword> Swords { get; set; }
+        public DbSet<ItemOnBag> ItemsOnBag { get; set; }      
         #endregion
 
 

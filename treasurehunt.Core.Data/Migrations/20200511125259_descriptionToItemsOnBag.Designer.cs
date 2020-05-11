@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using treasurehunt.Core.Data;
 
 namespace treasurehunt.Core.Data.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20200511125259_descriptionToItemsOnBag")]
+    partial class descriptionToItemsOnBag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,12 +30,18 @@ namespace treasurehunt.Core.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("ItemOnBag");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ItemOnBag");
                 });
 
             modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnage", b =>
@@ -164,6 +172,34 @@ namespace treasurehunt.Core.Data.Migrations
                     b.ToTable("Quete");
                 });
 
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Objets.DragonTooth", b =>
+                {
+                    b.HasBaseType("treasurehunt.Core.Data.Models.Objets.ItemOnBag");
+
+                    b.HasDiscriminator().HasValue("DragonTooth");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Objets.Elixir", b =>
+                {
+                    b.HasBaseType("treasurehunt.Core.Data.Models.Objets.ItemOnBag");
+
+                    b.HasDiscriminator().HasValue("Elixir");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Objets.KeyTreasure", b =>
+                {
+                    b.HasBaseType("treasurehunt.Core.Data.Models.Objets.ItemOnBag");
+
+                    b.HasDiscriminator().HasValue("KeyTreasure");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Objets.Sword", b =>
+                {
+                    b.HasBaseType("treasurehunt.Core.Data.Models.Objets.ItemOnBag");
+
+                    b.HasDiscriminator().HasValue("Sword");
+                });
+
             modelBuilder.Entity("treasurehunt.Core.Data.Models.Elfe", b =>
                 {
                     b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
@@ -183,34 +219,6 @@ namespace treasurehunt.Core.Data.Migrations
                     b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
 
                     b.HasDiscriminator().HasValue("Nain");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Bear", b =>
-                {
-                    b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
-
-                    b.HasDiscriminator().HasValue("Bear");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Dragon", b =>
-                {
-                    b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
-
-                    b.HasDiscriminator().HasValue("Dragon");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Rat", b =>
-                {
-                    b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
-
-                    b.HasDiscriminator().HasValue("Rat");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Spider", b =>
-                {
-                    b.HasBaseType("treasurehunt.Core.Data.Models.Personnage");
-
-                    b.HasDiscriminator().HasValue("Spider");
                 });
 #pragma warning restore 612, 618
         }

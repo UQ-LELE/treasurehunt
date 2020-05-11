@@ -4,13 +4,13 @@ using System.Text;
 
 namespace treasurehunt.Core.Data.Models.Objets
 {
-    public abstract class ItemOnBag
+    public class ItemOnBag
     {
         public int ID { get; set; }
 
       
-        public int Name { get; set; }
+        public string Name { get; set; }
 
-        public abstract string SpecialEffect();
+        public string Description { get; set; }
     }
 }

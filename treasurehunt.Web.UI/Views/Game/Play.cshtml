@@ -1,0 +1,70 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    treasurehunt.Core.Data.Models.Quetes.Evenement evenement = null;
+    evenement = ViewBag.Evenement;
+
+    List<treasurehunt.Core.Data.Models.Quetes.Choix> choices = null;
+    choices = ViewBag.Choix;
+
+    treasurehunt.Core.Data.Models.Quetes.Question question = null;
+    question = ViewBag.Question;
+
+}
+
+<div class="row">
+    <div class="col s12">
+        <div class="container center-align">
+
+            <div class="row">
+                <div class="card-panel teal">
+                    <span class="white-text">
+                        <p>
+                            @evenement.Description
+                        </p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card-panel teal center-align" style="padding:1px">
+                    <span class="white-text">
+                        <p>
+                            @question.LaQuestion
+                        </p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="center-align">
+
+                    @foreach (var choice in choices)
+                    {
+                        <div class="col s4">
+                            <a asp-controller="Game" asp-action="Play" asp-route-choice="@choice.NexEventNumber" class="waves-effect waves-light btn">@choice.NexEventNumber</a>
+                        </div>
+                    }
+
+                    <div class="col s4">
+                        <a asp-controller="Game" asp-action="Play" asp-route-choice="EBACK" class="waves-effect waves-light btn">Revenir sur mes pas</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@*Evenement
+    <partial name="_Evenement" for="evenement">
+        Question
+        <partial name="_Question" for="@Model">
+            Choix
+            <partial name="_Choix" for="@Model">
+                Objets
+                <partial name="_Objets" for="@Model">*@

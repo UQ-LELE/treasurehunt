@@ -15,7 +15,7 @@ namespace treasurehunt.Core.Data.Models
 
         [Required]
         [StringLength(20, ErrorMessage = "Le nom est limité à 20 charactères maximum")]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public int Health { get; set; }
 

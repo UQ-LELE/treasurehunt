@@ -6,6 +6,6 @@ namespace treasurehunt.Core.Data.Models.Objets
 {
     public class Bag
     {
-        public ICollection<ItemOnBag> ItemsOnBag { get; set; }
+        public List<ItemOnBag> ItemsOnBag { get; set; }
     }
 }
