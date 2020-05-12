@@ -9,20 +9,21 @@ namespace treasurehunt.Core.Data.Models
     public class Game
     {
        
-        public Rat Rat { get; set; }
+        public Enemy Rat { get; set; }
         
-        public Dragon Dragon { get; set; }
+        public Enemy Dragon { get; set; }
         
-        public Bear Bear { get; set; }
+        public Enemy Bear { get; set; }
         
-        public Spider Spider { get; set; }
+        public Enemy Spider { get; set; }
         public Game() { }
         public Game (List<Enemy> enemies)
         {
-            Rat = (Rat)enemies.Find(enemy => enemy.Name == "Rat");
-            Dragon = (Dragon)enemies.Find(enemy => enemy.Name == "Dragon");
-            Bear = (Bear)enemies.Find(enemy => enemy.Name == "Bear");
-            Spider = (Spider)enemies.Find(enemy => enemy.Name == "Spider");
+            
+            Rat = enemies.Find(enemy => enemy.Race == "Rat");
+            Dragon = enemies.Find(enemy => enemy.Race == "Dragon");
+            Bear = enemies.Find(enemy => enemy.Race == "Bear");
+            Spider = enemies.Find(enemy => enemy.Race == "Spider");
         }
 
         public Hero Hero { get; set; }

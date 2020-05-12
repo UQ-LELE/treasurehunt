@@ -8,11 +8,10 @@ namespace treasurehunt.Core.Data.Models.Personnages
     [Table("Heroes")]
     public class Hero : Personnage
     {
-        public Guid ID { get; set; }
-
+        public bool IsPoisoned { get; set; }
         [NotMapped]
         public List<ItemOnBag> ItemsOnBag { get; set; }
-       
+
         [NotMapped]
         public List<string> HisPath { get; set; }
 

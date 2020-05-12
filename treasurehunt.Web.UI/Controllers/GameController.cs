@@ -54,7 +54,7 @@ namespace treasurehunt.Web.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                //Instance game parameters with Enemies
+                //Instance game parameters with Enemies              
                 _game = new Game(this._context.Enemy.ToList());
 
                 //save myHero to game parameters
@@ -62,8 +62,8 @@ namespace treasurehunt.Web.UI.Controllers
                 _game.Hero = hero;
 
                 //Game Items from database to game parameters
-                //_game.ItemOnGame = new List<ItemOnBag>();
-                //_game.ItemOnGame = this._context.ItemsOnBag.ToList();
+                _game.ItemOnGame = new List<ItemOnBag>();
+                _game.ItemOnGame = this._context.ItemsOnBag.ToList();
 
                 //save game parameters to session
                 HttpContext.Session.SetComplexObject("Game", _game);
@@ -83,7 +83,7 @@ namespace treasurehunt.Web.UI.Controllers
 
             if (choice == "EBACK")
             {
-                //delete actual Event from Hero Path
+                // delete actual Event from Hero Path
                 _game.Hero.HisPath.RemoveAt(_game.Hero.HisPath.Count - 1);
 
                 // save path in Game session
@@ -98,6 +98,7 @@ namespace treasurehunt.Web.UI.Controllers
                 addEventToHeroPathAndChoice(_evenement);
             }
 
+            
             ViewBag.Question = getQuestion(_evenement);
             ViewBag.Choix = getChoices(_evenement);
             ViewBag.Hero = _game.Hero;
@@ -136,171 +137,170 @@ namespace treasurehunt.Web.UI.Controllers
             //get game parameters from Session
             _game = HttpContext.Session.GetComplexObject<Game>("Game");
 
+
             switch (evenement.Numero)
             {
                 #region Enemy Events
 
                 // case hero go to Rat Event
                 case "E321":
-                    if (_game.Rat.IsDead) { return getNexEvent("E321AV"); }
-                    else if (_game.Hero.HisChoices.Contains("E321")) { return getNexEvent("E321V"); }
-                    else { return evenement; }
+                    if (_game.Rat.IsDead) { evenement = getNexEvent("E321AV"); }
+                    else if (_game.Hero.HisChoices.Contains("E321")) { evenement = getNexEvent("E321V"); }
+                    break;
 
                 // case hero go to Bear Event
                 case "E432":
-                    if (!_game.Rat.IsDead && _game.Hero.HisChoices.Last() == "E321")
-                    {
-                        return checkEventStoryOf(getNexEvent("E321D"));
-                    }
-                    else if (_game.Bear.IsDead) { return getNexEvent("E432AV"); }
-                    else if (_game.Hero.HisChoices.Contains("E432")) { return checkEventStoryOf(getNexEvent("E432D")); }
-                    else { return evenement; }
+                    if (!_game.Rat.IsDead && _game.Hero.HisChoices.Last() == "E321"){ evenement = checkEventStoryOf(getNexEvent("E321D")); }
+                    else if (_game.Bear.IsDead) { evenement = getNexEvent("E432AV"); }
+                    else if (_game.Hero.HisChoices.Contains("E432")) { evenement = checkEventStoryOf(getNexEvent("E432D")); }
+                    break;
 
                 // case hero go to Dragon Event
                 case "E433":
-                    if (_game.Dragon.IsDead && _game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { return getNexEvent("E433AV"); }
-                    else if (_game.Dragon.IsDead && !_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { return getNexEvent("E433AVT"); }
-                    else { return evenement; }
+                    if (_game.Dragon.IsDead && _game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { evenement = getNexEvent("E433AV"); }
+                    else if (_game.Dragon.IsDead && !_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { evenement = getNexEvent("E433AVT"); }
+                    break;
 
                 // case hero go to Spider Event
                 case "E434":
-                    if (_game.Spider.IsDead && _game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE)) { return getNexEvent("E434AV"); }
-                    else if (_game.Spider.IsDead && !_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE)) { return getNexEvent("E434AVK"); }
-                    else { return evenement; }
+                    if (_game.Spider.IsDead && _game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE)) { evenement = getNexEvent("E434AV"); }
+                    else if (_game.Spider.IsDead && !_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE)) { evenement = getNexEvent("E434AVK"); }
+                    break;
+
                 #endregion
 
                 #region Object Events
                 //case hero go to KeyTreasure Event
                 case "E322":
-                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.KEY_TREASURE)) { return getNexEvent("E322V"); }
-                    else { return evenement; }
+                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.KEY_TREASURE)) { evenement = getNexEvent("E322V"); }
+                    break;
+
                 //case hero go to Sword Event
                 case "E323":
-                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.SWORD)) { return getNexEvent("E323V"); }
-                    else { return evenement; }
+                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.SWORD)) { evenement = getNexEvent("E323V"); }
+                    break;
+
                 //case hero go to Elixir Event
                 case "E324":
-                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.ELIXIR)) { return getNexEvent("E324V"); }
-                    else { return evenement; }
+                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.ELIXIR)) { evenement = getNexEvent("E324V"); }
+                    break;
 
                 //case hero go to Treasure Event
                 case "E544":
-                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.TREASURE)) { return getNexEvent("E544V"); }
-                    else { return evenement; }
+                    if (_game.Hero.ItemsOnBag.Exists(item => item.Name == GameConst.TREASURE)) { evenement = getNexEvent("E544V"); }
+                    break;
+
                 #endregion
 
                 #region Taking object Events
                 // case taking Key Treasure
                 case "E322T":
                     _game.Hero.ItemsOnBag.Add(_game.ItemOnGame.Find(item => item.Name == GameConst.KEY_TREASURE));
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return evenement;
+                    break;
 
                 //case taking Sword
                 case "E323T":
                     _game.Hero.ItemsOnBag.Add(_game.ItemOnGame.Find(item => item.Name == GameConst.SWORD));
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return evenement;
+                    break;
 
                 //case taking Elixir
                 case "E324T":
                     _game.Hero.ItemsOnBag.Add(_game.ItemOnGame.Find(item => item.Name == GameConst.ELIXIR));
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return evenement;
+                    break;
 
                 // case taking DragonTooth
                 case "E433T":
                     _game.Hero.ItemsOnBag.Add(_game.ItemOnGame.Find(item => item.Name == GameConst.DRAGON_TOOTH));
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return evenement;
+                    break;
 
                 // case taking Treasure
                 case "E544T":
                     _game.Hero.ItemsOnBag.Add(_game.ItemOnGame.Find(item => item.Name == GameConst.TREASURE));
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return evenement;
-                #endregion
+                    break;
+                    #endregion
 
                 #region Attacks Events
                 // case hero Attack rat
                 case "E321A":
                     _game.Rat.IsDead = true;
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return getNexEvent("E321AV");
+                    evenement = getNexEvent("E321AV");
+                    break;
 
                 // case hero Attack bear
-                case "E442A":
+                case "E432A":
                     _game.Bear.IsDead = true;
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    return getNexEvent("E442AV");
+                    evenement = getNexEvent("E432AV");
+                    break;
 
                 // case hero Attack spider
                 case "E434A":
                     _game.Spider.IsDead = true;
-                    HttpContext.Session.SetComplexObject("Game", _game);
-                    if (_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE))
-                    {
-                        return getNexEvent("E434AV");
-                    }
-                    else
-                    {
-                        return getNexEvent("E434AVK");
-                    }
-
+                    _game.Hero.IsPoisoned = true;
+                    if (_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.KEY_TREASURE)){ evenement = getNexEvent("E434AV");}
+                    else {evenement = getNexEvent("E434AVK");}
+                    break;
 
                 // case hero Attack dragon
                 case "E433A":
                     if (_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.SWORD))
                     {
                         _game.Dragon.IsDead = true;
-                        HttpContext.Session.SetComplexObject("Game", _game);
-                        return getNexEvent("E433AV");
+                        evenement = getNexEvent("E433AV");
                     }
-                    else { return getNexEvent("E433X"); }
+                    else { _game.Hero.IsDead = true; evenement = getNexEvent("E433X"); }
+                    break;
 
                 // case hero Attack vikings
                 case "E651A":
-                    if (_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { return getNexEvent("E651AV"); }
-                    else { return getNexEvent("E651X"); }
-
+                    if (_game.Hero.ItemsOnBag.Any(item => item.Name == GameConst.DRAGON_TOOTH)) { evenement = getNexEvent("E651AV"); }
+                    else { _game.Hero.IsDead = true; evenement = getNexEvent("E651X"); }
+                    break;
                 #endregion
 
                 #region Defense Events
                 // case rat attack you
                 case "E321D":
-                    if (_game.Hero.Health - _game.Rat.Attack < 0)
-                    {
-                        return getNexEvent("E321X");
-                    }
+                    if (_game.Hero.Health - _game.Rat.Attack < 0) { _game.Hero.IsDead = true; evenement = getNexEvent("E321X");}
                     else
                     {
                         _game.Rat.IsDead = true;
-                        HttpContext.Session.SetComplexObject("Game", _game);
                         _game.Hero.Health -= _game.Rat.Attack;
-                        return getNexEvent("E321D");
+                        evenement = getNexEvent("E321D");
                     }
-
+                    break;
                 // case Bear attack Hero
                 case "E432D":
-                    if (_game.Hero.Health - _game.Bear.Attack < 0)
-                    {
-                        return getNexEvent("E432DX");
-                    }
+                    if (_game.Hero.Health - _game.Bear.Attack < 0){ _game.Hero.IsDead = true;  evenement = getNexEvent("E432DX");}
                     else
                     {
                         _game.Bear.IsDead = true;
-                        HttpContext.Session.SetComplexObject("Game", _game);
                         _game.Hero.Health -= _game.Bear.Attack;
-                        return getNexEvent("E432DV");
+                        evenement = getNexEvent("E432DV");
                     }
+                    break;
+                #endregion
 
-                // case Spider attack Hero
-
+                #region Endings Events
+                case "761":
+                    if(!_game.Hero.ItemsOnBag.Any(items=>items.Name == GameConst.TREASURE)) { evenement = getNexEvent("E761X"); }
+                    break;
                 #endregion
 
                 default:
-                    return evenement;
+                    break;
             }
+
+            //if Hero is poisonned by spider, hit him on eatch step of path and verify if he's dead
+            if (_game.Hero.IsPoisoned)
+            {
+                _game.Hero.Health -= 10;
+                if(_game.Hero.Health <= 0) { evenement = getNexEvent("EXXX"); }          
+            }
+
+            //save new Game parameters in session
+            HttpContext.Session.SetComplexObject("Game", _game);
+
+            return evenement;
         }
 
         private void addEventToHeroPathAndChoice(Evenement evenement)

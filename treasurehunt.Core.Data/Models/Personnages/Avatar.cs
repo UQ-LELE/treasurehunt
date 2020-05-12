@@ -7,7 +7,6 @@ namespace treasurehunt.Core.Data.Models.Personnages
 {
     public class Avatar : Personnage
     {
-        public Guid ID { get; set; }
         public override string SpecialAbility()
         {
             throw new NotImplementedException();
