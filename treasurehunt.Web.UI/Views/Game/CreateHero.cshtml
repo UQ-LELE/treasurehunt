@@ -1,0 +1,84 @@
+﻿@model treasurehunt.Core.Data.Models.Hero
+
+@{
+
+    List<treasurehunt.Core.Data.Models.Personnage> list = null;
+
+    list = this.ViewBag.ListOfHeros;
+
+    var listOfHeros = list.Select(item => new SelectListItem() { Text = item.Name, Value = item.ID.ToString() }).ToList();
+
+}
+
+<h4>Créer mon héro</h4>
+<hr />
+<div class="row">
+    <div class="col s12">
+        <form asp-action="CreateHero">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input asp-for="Name" class="validate" />
+                    <label asp-for="Name">Name</label>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            @foreach (var hero in listOfHeros)
+            {
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input asp-for="Race" value="@hero" class="validate" />
+                        <label asp-for="Race">Name</label>
+                        <span asp-validation-for="Race" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input asp-for="Health" class="validate" />
+                        <label asp-for="Health">Health</label>
+                        <span asp-validation-for="Health" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input asp-for="Attack" class="validate" />
+                        <label asp-for="Attack">Attack</label>
+                        <span asp-validation-for="Attack" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input asp-for="Race" class="validate" />
+                        <label asp-for="Race">Name</label>
+                        <span asp-validation-for="Race" class="text-danger"></span>
+                    </div>
+                </div>
+            }
+
+
+
+
+            <div class="row">
+                <div class="input-field col s4">
+                    <select asp-for="Race" asp-items="listOfHeros"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+                <label>Choose your race</label>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+}

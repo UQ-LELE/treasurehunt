@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace treasurehunt.Core.Data.Models.Personnages
 {
-    public class Spider : Enemy
+    public class Avatar : Personnage
     {
+        public Guid ID { get; set; }
         public override string SpecialAbility()
         {
-            return "Morsure empoisonnée";
+            throw new NotImplementedException();
         }
     }
 }

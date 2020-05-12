@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using treasurehunt.Core.Data.Models;
 using treasurehunt.Core.Data.Models.Objets;
 using treasurehunt.Core.Data.Models.Personnages;
@@ -28,17 +29,21 @@ namespace treasurehunt.Core.Data
         #endregion
 
         #region Personnages
-        public DbSet<Humain> Humains { get; set; }
-        public DbSet<Elfe> Elfes { get; set; }
-        public DbSet<Nain> Nains { get; set; }
-        public DbSet<Rat> Rats { get; set; }
-        public DbSet<Spider> Spiders { get; set; }
-        public DbSet<Bear> Bears { get; set; }
-        public DbSet<Dragon> Dragons { get; set; }
+       //public DbSet<Humain> Humains { get; set; }
+       //public DbSet<Elfe> Elfes { get; set; }
+       //public DbSet<Nain> Nains { get; set; }
+       //public DbSet<Rat> Rats { get; set; }
+       //public DbSet<Spider> Spiders { get; set; }
+       //public DbSet<Bear> Bears { get; set; }
+       //public DbSet<Dragon> Dragons { get; set; }
+        //public DbSet<Personnage> Personnages { get; set; }
+        public DbSet<Hero> Heroes { get; set; }
+        public DbSet<Avatar> Avatars { get; set; }
+        public DbSet<Enemy> Enemy { get; set; }
         #endregion
 
         #region Objets
-        public DbSet<ItemOnBag> ItemsOnBag { get; set; }      
+        public DbSet<ItemOnBag> ItemsOnBag { get; set; }
         #endregion
 
 
@@ -49,8 +54,17 @@ namespace treasurehunt.Core.Data
             modelBuilder.Entity<Question>().ToTable("Question");
             modelBuilder.Entity<Choix>().ToTable("Choix");
             modelBuilder.Entity<ActionChoix>().ToTable("ActionChoix");
-            modelBuilder.Entity<Personnage>().ToTable("Personnages");
+            modelBuilder.Entity<Avatar>().ToTable("Avatar");
+            modelBuilder.Entity<Hero>().ToTable("Hero");
+            modelBuilder.Entity<Enemy>().ToTable("Enemy");
             modelBuilder.Entity<ItemOnBag>().ToTable("ItemOnBag");
+
+            foreach (var entity in modelBuilder.Model.GetEntityTypes()
+        .Where(e => typeof(Personnage).IsAssignableFrom(e.ClrType)))
+            {
+                modelBuilder.Entity(entity.Name).Property(nameof(Personnage.ID))
+                    .IsRequired().HasDefaultValueSql("NEWID()");
+            }
         }
 
         #endregion

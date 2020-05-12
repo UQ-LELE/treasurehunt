@@ -4,7 +4,7 @@ using System.Text;
 
 namespace treasurehunt.Core.Data.Models.Personnages
 {
-    public class Dragon : Personnage
+    public class Dragon : Enemy
     {
         public override string SpecialAbility()
         {

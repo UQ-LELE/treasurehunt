@@ -12,6 +12,9 @@
     treasurehunt.Core.Data.Models.Quetes.Question question = null;
     question = ViewBag.Question;
 
+    treasurehunt.Core.Data.Models.Hero hero = null;
+    hero = ViewBag.Hero;
+
 }
 
 <div class="row">
@@ -48,13 +51,26 @@
                         </div>
                     }
 
-                    <div class="col s4">
-                        <a asp-controller="Game" asp-action="Play" asp-route-choice="EBACK" class="waves-effect waves-light btn">Revenir sur mes pas</a>
-                    </div>
+                    @if (evenement.Numero != "E100")
+                    {
+                        <div class="col s4">
+                            <a asp-controller="Game" asp-action="Play" asp-route-choice="EBACK" class="waves-effect waves-light btn">Revenir sur mes pas</a>
+                        </div>
+                    }
+
 
                 </div>
 
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            @foreach(var path in @hero.heroPath)
+            {
+                @path
+            }
         </div>
     </div>
 
