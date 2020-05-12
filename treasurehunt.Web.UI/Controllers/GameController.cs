@@ -5,6 +5,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 using treasurehunt.Core.Data;
@@ -39,37 +40,38 @@ namespace treasurehunt.Web.UI.Controllers
 
         public IActionResult CreateHero()
         {
-            this.ViewBag.ListOfHeros = this._context.Personnages.Where(perso => perso.IsHero == true).ToList();
+            //send List of Avatar for selecting a hero type
+            this.ViewBag.ListOfAvatars = this._context.Avatars.ToList();
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateHero(Hero myHero)
+        public IActionResult CreateHero(Hero newHero)
         {
 
-            //Intance game parameters with Enemies
-            _game = new Game(this._context.Personnages.Where(perso => perso.IsHero == false).ToList());
+            IActionResult result = RedirectToAction("CreateHero");
 
-            //save hero to game parameters
-            Hero hero = new Hero(myHero.Name, myHero.Health, myHero.Attack, myHero.Race);
+            if (ModelState.IsValid)
+            {
+                //Instance game parameters with Enemies
+                _game = new Game(this._context.Enemy.ToList());
 
-           //hero.Name = "Je suis un test";
-           //hero.Health = 100;
-           //hero.Attack = 50;
-           //hero.HisPath = new List<String>();
-           //hero.HisChoices = new List<String>();
-           //hero.ItemsOnBag = new List<ItemOnBag>();
-            _game.Hero = hero;
-       
-            //Game Items from database to game parameters
-            _game.ItemOnGame = new List<ItemOnBag>();
-            _game.ItemOnGame = this._context.ItemsOnBag.ToList();
+                //save myHero to game parameters
+                Hero hero = new Hero(newHero.Name, newHero.Health, newHero.Attack, newHero.Race);
+                _game.Hero = hero;
 
-            //save game parameters to session
-            HttpContext.Session.SetComplexObject("Game", _game);
+                //Game Items from database to game parameters
+                //_game.ItemOnGame = new List<ItemOnBag>();
+                //_game.ItemOnGame = this._context.ItemsOnBag.ToList();
 
-            return RedirectToAction("Play", new { choice = "E100" });
+                //save game parameters to session
+                HttpContext.Session.SetComplexObject("Game", _game);
+                
+                result = RedirectToAction("Play", new { choice = "E100" });
+            }
+
+            return result;
         }
 
         public IActionResult Play(string choice)

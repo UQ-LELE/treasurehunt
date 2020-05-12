@@ -28,21 +28,13 @@ namespace treasurehunt.Core.Data
         public DbSet<ActionChoix> ActionChoixes { get; set; }
         #endregion
 
-        #region Personnages
-       //public DbSet<Humain> Humains { get; set; }
-       //public DbSet<Elfe> Elfes { get; set; }
-       //public DbSet<Nain> Nains { get; set; }
-       //public DbSet<Rat> Rats { get; set; }
-       //public DbSet<Spider> Spiders { get; set; }
-       //public DbSet<Bear> Bears { get; set; }
-       //public DbSet<Dragon> Dragons { get; set; }
-        //public DbSet<Personnage> Personnages { get; set; }
+        #region Characters  
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Enemy> Enemy { get; set; }
         #endregion
 
-        #region Objets
+        #region Items
         public DbSet<ItemOnBag> ItemsOnBag { get; set; }
         #endregion
 

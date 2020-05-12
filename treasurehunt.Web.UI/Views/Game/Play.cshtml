@@ -12,7 +12,7 @@
     treasurehunt.Core.Data.Models.Quetes.Question question = null;
     question = ViewBag.Question;
 
-    treasurehunt.Core.Data.Models.Hero hero = null;
+    treasurehunt.Core.Data.Models.Personnages.Hero hero = null;
     hero = ViewBag.Hero;
 
 }
@@ -67,7 +67,7 @@
 
     <div class="row">
         <div class="col s12">
-            @foreach(var path in @hero.heroPath)
+            @foreach(var path in @hero.HisPath)
             {
                 @path
             }
@@ -75,12 +75,3 @@
     </div>
 
 </div>
-
-@*Evenement
-    <partial name="_Evenement" for="evenement">
-        Question
-        <partial name="_Question" for="@Model">
-            Choix
-            <partial name="_Choix" for="@Model">
-                Objets
-                <partial name="_Objets" for="@Model">*@

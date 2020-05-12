@@ -17,7 +17,7 @@ namespace treasurehunt.Core.Data.Models
         
         public Spider Spider { get; set; }
         public Game() { }
-        public Game (List<Personnage> enemies)
+        public Game (List<Enemy> enemies)
         {
             Rat = (Rat)enemies.Find(enemy => enemy.Name == "Rat");
             Dragon = (Dragon)enemies.Find(enemy => enemy.Name == "Dragon");

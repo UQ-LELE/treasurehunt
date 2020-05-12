@@ -1,13 +1,7 @@
-﻿@model treasurehunt.Core.Data.Models.Hero
+﻿@model treasurehunt.Core.Data.Models.Personnages.Hero
 
 @{
-
-    List<treasurehunt.Core.Data.Models.Personnage> list = null;
-
-    list = this.ViewBag.ListOfHeros;
-
-    var listOfHeros = list.Select(item => new SelectListItem() { Text = item.Name, Value = item.ID.ToString() }).ToList();
-
+    List<treasurehunt.Core.Data.Models.Personnages.Avatar> listOfAvatars = this.ViewBag.ListOfAvatars;
 }
 
 <h4>Créer mon héro</h4>
@@ -24,52 +18,26 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
-            @foreach (var hero in listOfHeros)
+
+            @foreach (var avatar in listOfAvatars)
             {
-                <div class="row">
-                    <div class="input-field col s4">
-                        <input asp-for="Race" value="@hero" class="validate" />
-                        <label asp-for="Race">Name</label>
-                        <span asp-validation-for="Race" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s4">
-                        <input asp-for="Health" class="validate" />
-                        <label asp-for="Health">Health</label>
-                        <span asp-validation-for="Health" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s4">
-                        <input asp-for="Attack" class="validate" />
-                        <label asp-for="Attack">Attack</label>
-                        <span asp-validation-for="Attack" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s4">
-                        <input asp-for="Race" class="validate" />
-                        <label asp-for="Race">Name</label>
-                        <span asp-validation-for="Race" class="text-danger"></span>
-                    </div>
-                </div>
+                <p>
+                    <label>
+                        <input type="radio" asp-for="Race" value="@avatar.Race" />
+                        <span>@avatar.Race - @avatar.Health points de vie et @avatar.Attack points d'attaque</span>
+                    </label>
+                </p>
+                <input asp-for="Health" value="@avatar.Health" type="hidden" />
+                <input asp-for="Attack" value="@avatar.Attack" type="hidden" />
+                <input asp-for="IsHero" value="@avatar.IsHero" type="hidden" />
+                <input asp-for="IsDead" value="@avatar.IsDead" type="hidden" />
+
             }
 
-
-
-
-            <div class="row">
-                <div class="input-field col s4">
-                    <select asp-for="Race" asp-items="listOfHeros"></select>
-                </div>
-            </div>
             <div class="row">
                 <div class="input-field col s4">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
-                <label>Choose your race</label>
-
             </div>
         </form>
     </div>

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using treasurehunt.Core.Data.Models.Objets;
-using treasurehunt.Core.Data.Models.Personnages;
 
-namespace treasurehunt.Core.Data.Models
+namespace treasurehunt.Core.Data.Models.Personnages
 {
     [Table("Heroes")]
-
     public class Hero : Personnage
     {
         public Guid ID { get; set; }
@@ -23,6 +19,7 @@ namespace treasurehunt.Core.Data.Models
         [NotMapped]
         public List<string> HisChoices { get; set; }
 
+        public Hero() { }
         public Hero(string name, int health, int attack, string race)
         {
             this.Name = name;
