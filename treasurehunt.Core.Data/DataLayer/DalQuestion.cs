@@ -50,7 +50,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Ajoute et sauvegarde une nouvelle question
         /// </summary>
         /// <param name="questionToAdd"></param>
-        public void Add(Question questionToAdd)
+        public void AddQuestion(Question questionToAdd)
         {
             this._context.Questions.Add(questionToAdd);
             this._context.SaveChanges();
@@ -60,7 +60,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Edit et sauvegarde une nouvelle question
         /// </summary>
         /// <param name="questionToEdit"></param>
-        public void Edit(Question questionToEdit)
+        public void EditQuestion(Question questionToEdit)
         {
             this._context.Attach<Question>(questionToEdit);
             this._context.Entry(questionToEdit).Property(item => item).IsModified = true;

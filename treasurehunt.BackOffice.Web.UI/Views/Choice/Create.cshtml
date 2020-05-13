@@ -1,7 +1,78 @@
-﻿
+﻿@model treasurehunt.Core.Data.Models.Quest.Choice
+
 @{
-    ViewData["Title"] = "Create";
+    treasurehunt.Core.Data.Models.Quest.StoryEvent eventForChoice = ViewBag.EventForChoice;
+
+    List<treasurehunt.Core.Data.Models.Quest.StoryEvent> listOfEvent = ViewBag.ListOfEvents;
+
+    var listofAllEvents = listOfEvent.Select(item => new SelectListItem() { Text = item.Title, Value = item.Id.ToString() }).ToList();
 }
 
-<h1>Create</h1>
+<h3 class="center-align">Add a choice for to event</h3>
+<div class="divider"></div>
 
+<div class="row">
+    <!--Event info-->
+    <div class="col s12 m6">
+        <div class="box">
+            <div class="section">
+                <h5>Title</h5>
+                <div class="divider"></div>
+                <p>  @eventForChoice.Title</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="section">
+                <h5>Question</h5>
+                <div class="divider"></div>
+                <p>  @eventForChoice.QuestionEvent.Title</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="section">
+                <h5>Description</h5>
+                <div class="divider"></div>
+                <p> @eventForChoice.Description</p>
+            </div>
+        </div>
+    </div>
+
+    <!--Choice form-->
+    <div class="col s12 m6">
+        <div class="box">
+            <form asp-action="CreatePost">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input asp-for="Description" type="text" class="validate" />
+                        <label asp-for="Description">Choice description</label>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="input-field col s12">
+                    <select asp-for="StoryEventId" asp-items="listofAllEvents">
+                        <option value="" disabled selected>Choose an event</option>
+                    </select>
+                    <label>Choose next event for this choice</label>
+                </div>
+
+                <div class="input-field col s12" hidden>
+                    <input asp-for="QuestionId" value="@eventForChoice.QuestionEvent.Id" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Add choice" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+}

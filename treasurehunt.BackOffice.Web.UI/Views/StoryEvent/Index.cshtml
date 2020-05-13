@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Events story</h2>
+<h2 class="center-align">Events story</h2>
+<div class="divider"></div>
 
 <!--button to create new event-->
 <a asp-action="Create" class="waves-effect waves-light btn">Create an event</a>
+<div class="divider"></div>
 
 <!--Table of all event-->
 <table class="striped highlight">
@@ -24,41 +26,41 @@
     <tbody>
 
         @foreach (var storyEvent in @Model)
-        {        
-                <tr>
-                    <td>  <a asp-controller="StoryEvent" asp-action="EventBoard" asp-route-id="@storyEvent.Id">@storyEvent.Id</a></td>
-                    <td>@storyEvent.Title</td>
-                    @if (storyEvent.QuestionEvent != null)
+        {
+            <tr>
+                <td>@storyEvent.Id</td>
+                <td><a asp-controller="StoryEvent" asp-action="EventBoard" asp-route-id="@storyEvent.Id">@storyEvent.Title</a></td>
+                @if (storyEvent.QuestionEvent != null)
+                {
+                    @if (storyEvent.QuestionEvent.Title != null)
                     {
-                        @if (storyEvent.QuestionEvent.Title != null)
-                        {
-                            <td>@storyEvent.QuestionEvent.Title</td>
+                        <td>@storyEvent.QuestionEvent.Title</td>
 
-                        }
-                        else
-                        {
-                            <td>No question for this event</td>
-                        }
-                        @if (storyEvent.QuestionEvent.ChoicesEvent != null)
-                        {
-                            <td>
-                                @foreach (var choice in storyEvent.QuestionEvent.ChoicesEvent)
-                                {
-                                    @choice.StoryEventId;
-                                }
-                            </td>
-                        }
-                        else
-                        {
-                            <td>No choice for this event</td>
-                        }
                     }
                     else
                     {
                         <td>No question for this event</td>
+                    }
+                    @if (storyEvent.QuestionEvent.ChoicesEvent != null)
+                    {
+                        <td>
+                            @foreach (var choice in storyEvent.QuestionEvent.ChoicesEvent)
+                            {
+                                @choice.StoryEventId;
+                            }
+                        </td>
+                    }
+                    else
+                    {
                         <td>No choice for this event</td>
                     }
-                </tr>
+                }
+                else
+                {
+                    <td>No question for this event</td>
+                    <td>No choice for this event</td>
+                }
+            </tr>
         }
     </tbody>
 </table>

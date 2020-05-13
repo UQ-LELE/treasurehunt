@@ -1,7 +1,53 @@
-﻿
+﻿@model treasurehunt.Core.Data.Models.Quest.Question
+
 @{
-    ViewData["Title"] = "Edit";
+    treasurehunt.Core.Data.Models.Quest.StoryEvent eventForQuestion = ViewBag.EventForQuestion;
 }
 
-<h1>Edit</h1>
+<h2 class="center-align">Edit question for event number @eventForQuestion.Number</h2>
+<div class="divider"></div>
 
+<div class="row">
+    <!--Event info-->
+    <div class="col s12 m6">
+        <div class="box">
+            <div class="section">
+                <h5>Title</h5>
+                <div class="divider"></div>
+                <p>  @eventForQuestion.Title</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="section">
+                <h5>Description</h5>
+                <div class="divider"></div>
+                <p> @eventForQuestion.Description</p>
+            </div>
+        </div>
+    </div>
+
+    <!--Question edit form-->
+    <div class="col s12 m6 center-align">
+        <div class="box">
+            <form asp-action="EditPost">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input asp-for="Title" type="text" class="validate" />
+                        <label asp-for="Title">Question</label>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="input-field col s12" hidden>
+                    <input asp-for="StoryEventId" value="@Model.StoryEventId" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Edit Question" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

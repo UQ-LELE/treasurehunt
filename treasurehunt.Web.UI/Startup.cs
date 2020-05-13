@@ -26,7 +26,7 @@ namespace treasurehunt.Web.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(5));
+            services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
 
             string connectionString = this.Configuration.GetConnectionString("DefaultContext");
 

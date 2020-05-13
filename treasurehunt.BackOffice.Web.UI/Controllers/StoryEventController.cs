@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using treasurehunt.Core.Data.DataLayer;
 using treasurehunt.Core.Data.Models.Quest;
 
@@ -30,7 +31,12 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
 
         public IActionResult EventBoard(int id)
         {
+
             StoryEvent storyEvent = this._context.GetEventById(id);
+
+            //TempData for create and edit choices
+            TempData["EventFromBoard"] = JsonConvert.SerializeObject(storyEvent);
+            TempData["ListOfEvents"] = JsonConvert.SerializeObject(this._context.GetAllEvent());
 
             if (storyEvent == null)
             {

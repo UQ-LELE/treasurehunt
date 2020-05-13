@@ -49,7 +49,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Ajoute et sauvegarde un nouveau choix
         /// </summary>
         /// <param name="choiceToAdd"></param>
-        public void Add(Choice choiceToAdd)
+        public void AddChoice(Choice choiceToAdd)
         {
             this._context.Choices.Add(choiceToAdd);
             this._context.SaveChanges();
@@ -59,7 +59,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Edit et sauvegarde un nouveau choix
         /// </summary>
         /// <param name="choiceToEdit"></param>
-        public void Edit(Choice choiceToEdit)
+        public void EditChoice(Choice choiceToEdit)
         {
             this._context.Attach<Choice>(choiceToEdit);
             this._context.Entry(choiceToEdit).Property(item => item).IsModified = true;

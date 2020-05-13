@@ -14,6 +14,7 @@ namespace treasurehunt.Core.Data.Models.Quest
         /// <summary>
         /// Enonncé du choix
         /// </summary>
+       [Required(AllowEmptyStrings = false, ErrorMessage ="Question is required")]
         public string Description { get; set; }
 
         /// <summary>

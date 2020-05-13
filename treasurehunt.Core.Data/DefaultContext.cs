@@ -26,6 +26,7 @@ namespace treasurehunt.Core.Data
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<ItemOnGame> ItemsOnGame { get; set; }
+        public object Enemy { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

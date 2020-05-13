@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualBasic;
 using treasurehunt.Core.Data;
 using treasurehunt.Core.Data.Models;
-using treasurehunt.Core.Data.Models.Objets;
-using treasurehunt.Core.Data.Models.Personnages;
-using treasurehunt.Core.Data.Models.Quetes;
+using treasurehunt.Core.Data.Models.Characters;
+using treasurehunt.Core.Data.Models.ItemsOnGame;
+using treasurehunt.Core.Data.Models.Quest;
 using treasurehunt.Web.UI.Commons;
 using treasurehunt.Web.UI.Utilities;
 
@@ -55,7 +49,7 @@ namespace treasurehunt.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 //Instance game parameters with Enemies              
-                _game = new Game(this._context.Enemy.ToList());
+                _game = new Game(this._context.Enemies.ToList());
 
                 //save myHero to game parameters
                 Hero hero = new Hero(newHero.Name, newHero.Health, newHero.Attack, newHero.Race);
@@ -63,7 +57,7 @@ namespace treasurehunt.Web.UI.Controllers
 
                 //Game Items from database to game parameters
                 _game.ItemOnGame = new List<ItemOnGame>();
-                _game.ItemOnGame = this._context.ItemsOnBag.ToList();
+                _game.ItemOnGame = this._context.ItemsOnGame.ToList();
 
                 //save game parameters to session
                 HttpContext.Session.SetComplexObject("Game", _game);
@@ -109,11 +103,11 @@ namespace treasurehunt.Web.UI.Controllers
         private StoryEvent getNexEvent(string choice)
         {
             _evenement = new StoryEvent();
-            _evenement.Numero = choice;
+            _evenement.Number = choice;
 
             if (choice != "EBACK")
             {
-                _evenement = this._context.Evenements.First(item => item.Numero == choice);
+                _evenement = this._context.StoryEvents.First(item => item.Number == choice);
             }
 
             return _evenement;
@@ -122,13 +116,13 @@ namespace treasurehunt.Web.UI.Controllers
 
         private List<Choice> getChoices(StoryEvent evenement)
         {
-            List<Choice> choixesForThisEvent = this._context.Choixes.Where(choix => choix.EventNumber == evenement.Numero).ToList();
+            List<Choice> choixesForThisEvent = this._context.Choices.Where(choix => choix.StoryEventId == evenement.Id).ToList();
             return choixesForThisEvent;
         }
 
         private Question getQuestion(StoryEvent evenement)
         {
-            Question questionForThisEvent = this._context.Questions.First(question => question.ID == evenement.QuestionId);
+            Question questionForThisEvent = this._context.Questions.First(question => question.StoryEventId == evenement.Id);
             return questionForThisEvent;
         }
 
@@ -138,7 +132,7 @@ namespace treasurehunt.Web.UI.Controllers
             _game = HttpContext.Session.GetComplexObject<Game>("Game");
 
 
-            switch (evenement.Numero)
+            switch (evenement.Number)
             {
                 #region Enemy Events
 
@@ -311,18 +305,18 @@ namespace treasurehunt.Web.UI.Controllers
             // if starting game, add First Event to Hero Path
             if (_game.Hero.HisChoices.Count == 0)
             {
-                _game.Hero.HisPath.Add(evenement.Numero);
+                _game.Hero.HisPath.Add(evenement.Number);
             }
 
             // check if last Hero Path contains same root Event Number
-            if (!_game.Hero.HisPath.Last().Contains(evenement.Numero.Substring(0, 4)))
+            if (!_game.Hero.HisPath.Last().Contains(evenement.Number.Substring(0, 4)))
             {
                 //if they're not the same, add the root Event Number to the path
-                _game.Hero.HisPath.Add(evenement.Numero.Substring(0, 4));
+                _game.Hero.HisPath.Add(evenement.Number.Substring(0, 4));
             }
 
             //anyway add it to Hero Choire to be count at the end of the party
-            _game.Hero.HisChoices.Add(evenement.Numero);
+            _game.Hero.HisChoices.Add(evenement.Number);
 
             // save new game parameters to session
             HttpContext.Session.SetComplexObject("Game", _game);

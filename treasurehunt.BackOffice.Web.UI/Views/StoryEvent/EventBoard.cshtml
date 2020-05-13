@@ -37,12 +37,12 @@
         <!--Choices of event-->
         <ul class="collection with-header">
             <li class="collection-header"><h5>Choices</h5></li>
-            @if (Model.ChoicesEvent != null)
+            @if (Model.QuestionEvent.ChoicesEvent != null)
             {
 
-                @foreach (var choice in Model.ChoicesEvent)
+                @foreach (var choice in Model.QuestionEvent.ChoicesEvent)
                 {
-                    <li class="collection-item"><div>@choice.Description<a asp-controller="Choice" asp-action="Edit" asp-route-id="@choice.Id" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                    <li class="collection-item"><div>@choice.Description /@choice.StoryEventId<a asp-controller="Choice" asp-action="Edit" asp-route-id="@choice.Id" class="secondary-content"><i class="material-icons">send</i></a></div></li>
                 }
 
             }
@@ -50,10 +50,13 @@
             {
                 <li class="collection-item">No choice for this event</li>
             }
-            <li class="collection-item">
-                <a asp-controller="Choice" asp-action="Create" asp-route-id="@Model.Id">Add a choice for this event</a>
-            </li>
+            @if (Model.QuestionEvent != null)
+            {
+                <li class="collection-item">
+                    <a asp-controller="Choice" asp-action="Create" asp-route-titleOfEvent="@Model.Title" asp-route-numberOfEvent="@Model.Number">Add a choice for this event</a>
+                </li>
 
+            }
         </ul>
     </div>
 

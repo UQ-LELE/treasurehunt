@@ -1,6 +1,6 @@
 ﻿@model treasurehunt.Core.Data.Models.Quest.StoryEvent
 
-<h2 class="center-align">Edition of event number @Model.Number</h2>
+<h2 class="center-align">Edit event number @Model.Number</h2>
 <div class="divider"></div>
 
 <!--Form to edit event-->
@@ -15,15 +15,13 @@
             </div>
 
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s2">
                     <input asp-for="Number" type="text" class="validate" />
                     <label asp-for="Number">Number</label>
                     <span asp-validation-for="Number" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s10">
                     <input asp-for="Title" type="text" class="validate" />
                     <label asp-for="Title">Title</label>
                     <span asp-validation-for="Title" class="text-danger"></span>
