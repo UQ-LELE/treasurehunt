@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace treasurehunt.Core.Data.Models.Quetes
+namespace treasurehunt.Core.Data.Models.Quest
 {
-    public class Evenement
+    public class StoryEvent
     {
         #region Propriétés
         [Key]
@@ -14,13 +12,13 @@ namespace treasurehunt.Core.Data.Models.Quetes
         /// <summary>
         /// Numéro de l'évènement
         /// </summary>
-        public string Numero { get; set; }
+        public string Number { get; set; }
 
         /// <summary>
         /// Titre de l'évènement
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Titre de l'évènement requis")]
-        public string Titre { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Description de l'évènement
@@ -31,17 +29,17 @@ namespace treasurehunt.Core.Data.Models.Quetes
         /// <summary>
         /// Indique si c'est l'évènement de démarrage
         /// </summary>
-        public bool EstInitial { get; set; }
+        public bool IsFirstEvent { get; set; }
 
         /// <summary>
-        /// Question de l'évènement
+        /// Question du paragraphe
         /// </summary>
-        public int QuestionId { get; set; }
+        public Question QuestionEvent { get; set; }
 
         /// <summary>
-        /// Liste des choix possibles
+        /// Liste des réponses possibles
         /// </summary>
-       // public IEnumerable<Choix> LesChoix { get; set; }
+        public IEnumerable<Choice> ChoicesEvent { get; set; }
         #endregion
 
     }

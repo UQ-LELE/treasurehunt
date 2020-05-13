@@ -22,7 +22,7 @@ namespace treasurehunt.Web.UI.Controllers
     {
         #region Champs privés
         private DefaultContext _context = null;
-        private Evenement _evenement;
+        private StoryEvent _evenement;
         private Game _game;
         #endregion
 
@@ -62,7 +62,7 @@ namespace treasurehunt.Web.UI.Controllers
                 _game.Hero = hero;
 
                 //Game Items from database to game parameters
-                _game.ItemOnGame = new List<ItemOnBag>();
+                _game.ItemOnGame = new List<ItemOnGame>();
                 _game.ItemOnGame = this._context.ItemsOnBag.ToList();
 
                 //save game parameters to session
@@ -79,7 +79,7 @@ namespace treasurehunt.Web.UI.Controllers
             // get game parameters from Session
             _game = HttpContext.Session.GetComplexObject<Game>("Game");
 
-            _evenement = new Evenement();
+            _evenement = new StoryEvent();
 
             if (choice == "EBACK")
             {
@@ -106,9 +106,9 @@ namespace treasurehunt.Web.UI.Controllers
             return View();
         }
 
-        private Evenement getNexEvent(string choice)
+        private StoryEvent getNexEvent(string choice)
         {
-            _evenement = new Evenement();
+            _evenement = new StoryEvent();
             _evenement.Numero = choice;
 
             if (choice != "EBACK")
@@ -120,19 +120,19 @@ namespace treasurehunt.Web.UI.Controllers
         }
 
 
-        private List<Choix> getChoices(Evenement evenement)
+        private List<Choice> getChoices(StoryEvent evenement)
         {
-            List<Choix> choixesForThisEvent = this._context.Choixes.Where(choix => choix.EventNumber == evenement.Numero).ToList();
+            List<Choice> choixesForThisEvent = this._context.Choixes.Where(choix => choix.EventNumber == evenement.Numero).ToList();
             return choixesForThisEvent;
         }
 
-        private Question getQuestion(Evenement evenement)
+        private Question getQuestion(StoryEvent evenement)
         {
             Question questionForThisEvent = this._context.Questions.First(question => question.ID == evenement.QuestionId);
             return questionForThisEvent;
         }
 
-        private Evenement checkEventStoryOf(Evenement evenement)
+        private StoryEvent checkEventStoryOf(StoryEvent evenement)
         {
             //get game parameters from Session
             _game = HttpContext.Session.GetComplexObject<Game>("Game");
@@ -303,7 +303,7 @@ namespace treasurehunt.Web.UI.Controllers
             return evenement;
         }
 
-        private void addEventToHeroPathAndChoice(Evenement evenement)
+        private void addEventToHeroPathAndChoice(StoryEvent evenement)
         {
 
             _game = HttpContext.Session.GetComplexObject<Game>("Game");

@@ -10,8 +10,8 @@ using treasurehunt.Core.Data;
 namespace treasurehunt.Core.Data.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20200512134616_GuidID")]
-    partial class GuidID
+    [Migration("20200513143612_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,9 @@ namespace treasurehunt.Core.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Hero", b =>
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Characters.Avatar", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWID()");
@@ -46,66 +46,17 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Hero");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Objets.ItemOnBag", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ItemOnBag");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Avatar", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<int>("Attack")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Health")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDead")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsHero")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("Race")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Avatar");
                 });
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Personnages.Enemy", b =>
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Characters.Enemy", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWID()");
@@ -128,50 +79,51 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("Race")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Enemy");
                 });
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.ActionChoix", b =>
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Characters.Hero", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
-                    b.Property<string>("ActionDuChoix")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ActionChoix");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.Choix", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ActionChoixId")
+                    b.Property<int>("Attack")
                         .HasColumnType("int");
 
-                    b.Property<string>("EventNumber")
+                    b.Property<int>("Health")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHero")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPoisoned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Race")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NexEventNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("ID");
-
-                    b.ToTable("Choix");
+                    b.ToTable("Hero");
                 });
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.Evenement", b =>
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.ItemsOnGame.ItemOnGame", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,56 +131,108 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EstInitial")
-                        .HasColumnType("bit");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Numero")
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemOnGame");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.Choice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Titre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("StoryEventId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Evenement");
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("StoryEventId");
+
+                    b.ToTable("Choice");
                 });
 
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.Question", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("LaQuestion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quetes.Quete", b =>
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Titre")
+                    b.Property<int>("StoryEventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryEventId")
+                        .IsUnique();
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.StoryEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFirstEvent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quete");
+                    b.ToTable("StoryEvent");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.Choice", b =>
+                {
+                    b.HasOne("treasurehunt.Core.Data.Models.Quest.Question", null)
+                        .WithMany("ChoicesEvent")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("treasurehunt.Core.Data.Models.Quest.StoryEvent", null)
+                        .WithMany("ChoicesEvent")
+                        .HasForeignKey("StoryEventId");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.Question", b =>
+                {
+                    b.HasOne("treasurehunt.Core.Data.Models.Quest.StoryEvent", null)
+                        .WithOne("QuestionEvent")
+                        .HasForeignKey("treasurehunt.Core.Data.Models.Quest.Question", "StoryEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

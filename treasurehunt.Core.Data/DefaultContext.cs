@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
-using treasurehunt.Core.Data.Models;
-using treasurehunt.Core.Data.Models.Objets;
-using treasurehunt.Core.Data.Models.Personnages;
-using treasurehunt.Core.Data.Models.Quetes;
+using treasurehunt.Core.Data.Models.Characters;
+using treasurehunt.Core.Data.Models.ItemsOnGame;
+using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data
 {
@@ -18,43 +16,32 @@ namespace treasurehunt.Core.Data
         {
         }
 
-        #region Propriétés
+        #region Properties
 
-        #region Quetes
-        public DbSet<Quete> Quetes { get; set; }
-        public DbSet<Evenement> Evenements { get; set; }
+        
+        public DbSet<StoryEvent> StoryEvents { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Choix> Choixes { get; set; }
-        public DbSet<ActionChoix> ActionChoixes { get; set; }
-        #endregion
-
-        #region Characters  
+        public DbSet<Choice> Choices { get; set; }
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Enemy> Enemy { get; set; }
-        #endregion
-
-        #region Items
-        public DbSet<ItemOnBag> ItemsOnBag { get; set; }
-        #endregion
-
+        public DbSet<ItemOnGame> ItemsOnGame { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Quete>().ToTable("Quete");
-            modelBuilder.Entity<Evenement>().ToTable("Evenement");
+
+            modelBuilder.Entity<StoryEvent>().ToTable("StoryEvent");
             modelBuilder.Entity<Question>().ToTable("Question");
-            modelBuilder.Entity<Choix>().ToTable("Choix");
-            modelBuilder.Entity<ActionChoix>().ToTable("ActionChoix");
+            modelBuilder.Entity<Choice>().ToTable("Choice");
+            modelBuilder.Entity<ItemOnGame>().ToTable("ItemOnGame");
             modelBuilder.Entity<Avatar>().ToTable("Avatar");
             modelBuilder.Entity<Hero>().ToTable("Hero");
             modelBuilder.Entity<Enemy>().ToTable("Enemy");
-            modelBuilder.Entity<ItemOnBag>().ToTable("ItemOnBag");
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes()
-        .Where(e => typeof(Personnage).IsAssignableFrom(e.ClrType)))
+        .Where(e => typeof(Character).IsAssignableFrom(e.ClrType)))
             {
-                modelBuilder.Entity(entity.Name).Property(nameof(Personnage.ID))
+                modelBuilder.Entity(entity.Name).Property(nameof(Character.Id))
                     .IsRequired().HasDefaultValueSql("NEWID()");
             }
         }

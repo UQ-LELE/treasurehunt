@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using treasurehunt.Core.Data.Models.Objets;
-using treasurehunt.Core.Data.Models.Quetes;
 
-namespace treasurehunt.Core.Data.Models.Personnages
+
+namespace treasurehunt.Core.Data.Models.Characters
 {
 
-    public abstract class Personnage
+    public abstract class Character
     {
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Le nom est requis")]
         [StringLength(20, ErrorMessage = "Le nom est limité à 20 charactères maximum")]
@@ -33,6 +29,7 @@ namespace treasurehunt.Core.Data.Models.Personnages
 
         [Required]
         public bool IsHero { get; set; }
+
         public abstract string SpecialAbility();
 
 

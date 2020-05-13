@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using treasurehunt.Core.Data.Models.Objets;
-using treasurehunt.Core.Data.Models.Personnages;
+﻿using System.Collections.Generic;
+using treasurehunt.Core.Data.Models.Characters;
+using treasurehunt.Core.Data.Models.ItemsOnGame;
 
 namespace treasurehunt.Core.Data.Models
 {
@@ -28,6 +26,6 @@ namespace treasurehunt.Core.Data.Models
 
         public Hero Hero { get; set; }
     
-        public List<ItemOnBag> ItemOnGame { get; set; } 
+        public List<ItemOnGame> ItemOnGame { get; set; } 
     }
 }

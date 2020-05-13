@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using treasurehunt.Core.Data.Models.Quetes;
+﻿using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data.DataLayer
 {
     /// <summary>
     /// Layer d'accès à la base de données (encapsule l'appel entities)
     /// </summary>
-    public class QuestionDataLayer
+    public class DalQuestion
     {
         #region Fields
         private DefaultContext _context = null;
         #endregion
 
         #region Constructors
-        public QuestionDataLayer(DefaultContext context)
+        public DalQuestion(DefaultContext context)
         {
             this._context = context;
         }

@@ -1,1 +1,35 @@
-﻿
+﻿@model IEnumerable<treasurehunt.Core.Data.Models.Quetes.StoryEvent>
+
+
+<h1>Evenements</h1>
+
+<table class="striped highlight">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Question</th>
+            <th>Choices</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var evenement in @Model)
+        {
+        <a asp-action="Edit" asp-route-id="@evenement.Id">
+            <tr>
+                <td>@evenement.Numero</td>
+                <td>@evenement.Titre</td>
+                <td>@evenement.Description</td>
+                <td>@evenement.QuestionId</td>
+                <td>E111/E111</td>
+
+            </tr>
+        </a>
+        }
+
+
+    </tbody>
+</table>

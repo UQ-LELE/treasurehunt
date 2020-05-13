@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace treasurehunt.Core.Data.Models.Personnages
+namespace treasurehunt.Core.Data.Models.Characters
 {
-    public class Enemy : Personnage
+    public class Enemy : Character
     {
         public override string SpecialAbility()
         {
