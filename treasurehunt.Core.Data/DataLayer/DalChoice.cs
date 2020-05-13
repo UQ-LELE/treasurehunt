@@ -1,4 +1,7 @@
-﻿using treasurehunt.Core.Data.Models.Quest;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data.DataLayer
 {
@@ -7,6 +10,7 @@ namespace treasurehunt.Core.Data.DataLayer
     /// </summary>
     public class DalChoice
     {
+
         #region Fields
         private DefaultContext _context = null;
         #endregion
@@ -21,19 +25,59 @@ namespace treasurehunt.Core.Data.DataLayer
         #region Public methods
 
         /// <summary>
-        /// Ajoute et sauvegarde une nouvelle aventure
+        /// Récupérer tous les choix
         /// </summary>
-        /// <param name="evenement"></param>
-        public void Add(Choice choix)
+
+        public List<Choice> GetAllChoices()
         {
-            this._context.Choices.Add(choix);
+            return this._context.Choices
+                .ToList();
+        }
+
+        /// <summary>
+        /// Retourne un choix
+        /// </summary>
+        /// <param name="id">Identifiant du choix</param>
+        /// <returns></returns>
+        public Choice GetChoiceById(int id)
+        {
+            return this._context.Choices
+                                .First(item => item.Id == id);
+        }
+
+        /// <summary>
+        /// Ajoute et sauvegarde un nouveau choix
+        /// </summary>
+        /// <param name="choiceToAdd"></param>
+        public void Add(Choice choiceToAdd)
+        {
+            this._context.Choices.Add(choiceToAdd);
             this._context.SaveChanges();
         }
 
-        public void Edit(Choice choix)
+        /// <summary>
+        /// Edit et sauvegarde un nouveau choix
+        /// </summary>
+        /// <param name="choiceToEdit"></param>
+        public void Edit(Choice choiceToEdit)
         {
-            //edit linq
+            this._context.Attach<Choice>(choiceToEdit);
+            this._context.Entry(choiceToEdit).Property(item => item).IsModified = true;
             this._context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Supprime un choix
+        /// </summary>
+        /// <param name="id">Identifiant du choix à supprimer</param>
+        public void DeleteChoiceById(int id)
+        {
+            Choice choiceToDelete = this._context.Choices.SingleOrDefault(e => e.Id == id);
+            if (choiceToDelete != null)
+            {
+                this._context.Choices.Remove(choiceToDelete);
+                this._context.SaveChanges();
+            }
         }
         #endregion
     }

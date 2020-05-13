@@ -50,7 +50,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <summary>
         /// Ajoute et sauvegarde un nouvelle évènement
         /// </summary>
-        /// <param name="evenement"></param>
+        /// <param name="eventToAdd"></param>
         public void AddEvent(StoryEvent eventToAdd)
         {
             this._context.StoryEvents.Add(eventToAdd);
@@ -60,7 +60,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <summary>
         /// Edit et sauvegarde un évènement
         /// </summary>
-        /// <param name="evenement">évènement à modifier</param>
+        /// <param name="eventToEdit">évènement à modifier</param>
         public void EditEvent(StoryEvent eventToEdit)
         {
             this._context.Attach<StoryEvent>(eventToEdit);

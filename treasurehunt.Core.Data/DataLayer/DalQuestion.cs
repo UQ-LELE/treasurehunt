@@ -1,4 +1,7 @@
-﻿using treasurehunt.Core.Data.Models.Quest;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data.DataLayer
 {
@@ -19,20 +22,63 @@ namespace treasurehunt.Core.Data.DataLayer
         #endregion
 
         #region Public methods
+
         /// <summary>
-        /// Ajoute et sauvegarde une nouvelle aventure
+        /// Récupérer toutes les questions et leur choix associés
         /// </summary>
-        /// <param name="evenement"></param>
-        public void Add(Question question)
+
+        public List<Question> GetAllQuestion()
         {
-            this._context.Questions.Add(question);
+            return this._context.Questions
+                                .Include(e => e.ChoicesEvent)
+                                .ToList();
+        }
+
+        /// <summary>
+        /// Retourne une question et ses choix associés
+        /// </summary>
+        /// <param name="id">Identifiant d'un question recherchée</param>
+        /// <returns></returns>
+        public Question GetQuestionById(int id)
+        {
+            return this._context.Questions
+                                .Include(e => e.ChoicesEvent)
+                                .First(item => item.Id == id);
+        }
+
+        /// <summary>
+        /// Ajoute et sauvegarde une nouvelle question
+        /// </summary>
+        /// <param name="questionToAdd"></param>
+        public void Add(Question questionToAdd)
+        {
+            this._context.Questions.Add(questionToAdd);
             this._context.SaveChanges();
         }
 
-        public void Edit(Question question)
+        /// <summary>
+        /// Edit et sauvegarde une nouvelle question
+        /// </summary>
+        /// <param name="questionToEdit"></param>
+        public void Edit(Question questionToEdit)
         {
-            //edit linq
+            this._context.Attach<Question>(questionToEdit);
+            this._context.Entry(questionToEdit).Property(item => item).IsModified = true;
             this._context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Supprime une question
+        /// </summary>
+        /// <param name="id">Identifiant de la question à supprimer</param>
+        public void DeleteQuestionById(int id)
+        {
+            Question questionToDelete = this._context.Questions.SingleOrDefault(e => e.Id == id);
+            if (questionToDelete != null)
+            {
+                this._context.Questions.Remove(questionToDelete);
+                this._context.SaveChanges();
+            }
         }
         #endregion
     }
