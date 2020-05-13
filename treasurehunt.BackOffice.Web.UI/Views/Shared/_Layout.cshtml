@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Treasure Hunt BackOffice</title>
+    <title>@ViewData["Title"] - Treasure Hunt</title>
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -12,12 +12,14 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo right">Treasure Hunt BackOffice</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo right">Treasure Hunt</a>
 
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Quete" asp-action="Index">Quete</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                    <li><a asp-area="" asp-controller="StoryEvent" asp-action="Index">Events</a></li>
+                    <li><a asp-area="" asp-controller="Enemy" asp-action="Index">Enemies</a></li>
+                    <li><a asp-area="" asp-controller="Avatar" asp-action="Index">Avatars</a></li>
+                    <li><a asp-area="" asp-controller="Hero" asp-action="Index">Heroes</a></li>
                 </ul>
             </div>
         </nav>
