@@ -21,8 +21,4 @@
     <ProjectReference Include="..\treasurehunt.Core.Data\treasurehunt.Core.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\StoryEvent\" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,45 @@
+﻿@model List<treasurehunt.Core.Data.Models.Quest.StoryEvent>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Events story</h1>
+
+<a asp-action="Create" class="waves-effect waves-light btn">Create an event</a>
+
+
+<table class="striped highlight">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Question</th>
+            <th>Choices</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var storyEvent in @Model)
+        {
+
+            <tr>
+                <a asp-controller="StoryEvent" asp-action="Edit" asp-route-id="@storyEvent.Id">
+                    <td>@storyEvent.Id</td>
+                    <td>@storyEvent.Title</td>
+                    <td>@storyEvent.Description</td>
+                    <td>@storyEvent.QuestionEvent.Title</td>
+                    <td>
+                        @foreach (var choice in storyEvent.QuestionEvent.ChoicesEvent)
+                        {
+                            @choice.StoryEventId;
+                        }
+                    </td>
+                </a>
+            </tr>
+
+        }
+    </tbody>
+</table>
