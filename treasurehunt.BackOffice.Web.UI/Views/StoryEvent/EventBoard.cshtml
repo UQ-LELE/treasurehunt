@@ -1,0 +1,75 @@
+﻿@model treasurehunt.Core.Data.Models.Quest.StoryEvent
+
+<h2 class="center-align">Event number @Model.Number</h2>
+<div class="divider"></div>
+
+<div class="row">
+    <!--Column for Title, Question and Choice-->
+    <div class="col s12 m5">
+        <!--Title of event-->
+        <div class="box">
+            <div class="section">
+                <h5>Title</h5>
+                <a asp-controller="StoryEvent" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <div class="divider"></div>
+                <p>  @Model.Title</p>
+            </div>
+        </div>
+
+        <!--Question of event-->
+        <div class="box">
+            <div class="section">
+                <h5>Question</h5>
+
+                @if (Model.QuestionEvent != null)
+                {
+                    <a asp-controller="Question" asp-action="Edit" asp-route-id="@Model.QuestionEvent.Id">Edit</a>
+                    <div class="divider"></div>
+                    <p>@Model.QuestionEvent.Title</p>
+                }
+                else
+                {
+                    <a asp-controller="Question" asp-action="Create" asp-route-id="@Model.Id">Add a question for this event</a>
+                }
+            </div>
+        </div>
+
+        <!--Choices of event-->
+        <ul class="collection with-header">
+            <li class="collection-header"><h5>Choices</h5></li>
+            @if (Model.ChoicesEvent != null)
+            {
+
+                @foreach (var choice in Model.ChoicesEvent)
+                {
+                    <li class="collection-item"><div>@choice.Description<a asp-controller="Choice" asp-action="Edit" asp-route-id="@choice.Id" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                }
+
+            }
+            else
+            {
+                <li class="collection-item">No choice for this event</li>
+            }
+            <li class="collection-item">
+                <a asp-controller="Choice" asp-action="Create" asp-route-id="@Model.Id">Add a choice for this event</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!--Column for Description of event-->
+    <div class="col s12 m7">
+        <div class="box">
+            <div class="section">
+                <h5>
+                    Description
+                </h5>
+                <a asp-controller="StoryEvent" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <div class="divider"></div>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

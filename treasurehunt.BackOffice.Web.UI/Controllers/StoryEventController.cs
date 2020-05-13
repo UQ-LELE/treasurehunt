@@ -28,6 +28,18 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
             return View(storyEvents);
         }
 
+        public IActionResult EventBoard(int id)
+        {
+            StoryEvent storyEvent = this._context.GetEventById(id);
+
+            if (storyEvent == null)
+            {
+                return NotFound();
+            }
+
+            return View(storyEvent);
+        }
+
         public IActionResult Create()
         {
             return View();
