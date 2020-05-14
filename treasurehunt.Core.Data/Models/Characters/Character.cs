@@ -30,6 +30,8 @@ namespace treasurehunt.Core.Data.Models.Characters
         [Required]
         public bool IsHero { get; set; }
 
+        public int ImageId { get; set; }
+
         public abstract string SpecialAbility();
 
 

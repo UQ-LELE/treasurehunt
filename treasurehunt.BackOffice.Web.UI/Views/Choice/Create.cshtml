@@ -3,6 +3,9 @@
 @{
     treasurehunt.Core.Data.Models.Quest.StoryEvent eventForChoice = ViewBag.EventForChoice;
 
+    //A essayer directement avec le ViewBag
+    //new SelectList(ViewBag.ListOfEvents, "id", "Title")
+
     List<treasurehunt.Core.Data.Models.Quest.StoryEvent> listOfEvent = ViewBag.ListOfEvents;
 
     var listofAllEvents = listOfEvent.Select(item => new SelectListItem() { Text = item.Title, Value = item.Id.ToString() }).ToList();

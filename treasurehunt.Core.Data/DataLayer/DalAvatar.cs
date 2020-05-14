@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using treasurehunt.Core.Data.Models.Characters;
 
 namespace treasurehunt.Core.Data.DataLayer
@@ -25,10 +27,10 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer tous les avatars
         /// </summary>
 
-        public List<Avatar> GetAllAvatars()
+        public async Task<List<Avatar>> GetAll()
         {
-            return this._context.Avatars
-                .ToList();
+            return await this._context.Avatars
+                .ToListAsync();
         }
 
         /// <summary>
@@ -36,45 +38,53 @@ namespace treasurehunt.Core.Data.DataLayer
         /// </summary>
         /// <param name="id">Identifiant de l'avatar</param>
         /// <returns></returns>
-        public Avatar GetAvatarById(Guid id)
+        public async Task<Avatar> GetById(Guid id)
         {
-            return this._context.Avatars
-                                .First(item => item.Id == id);
+            return await this._context.Avatars
+                                .FirstAsync(item => item.Id == id);
         }
 
         /// <summary>
         /// Ajoute et sauvegarde un nouvel avatar
         /// </summary>
         /// <param name="avatarToAdd"></param>
-        public void Add(Avatar avatarToAdd)
+        public async Task Add(Avatar avatarToAdd)
         {
             this._context.Avatars.Add(avatarToAdd);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Edit et sauvegarde un nouvel avatar
         /// </summary>
         /// <param name="avatarToEdit"></param>
-        public void Edit(Avatar avatarToEdit)
+        public async Task Edit(Avatar avatarToEdit)
         {
             this._context.Attach<Avatar>(avatarToEdit);
             this._context.Entry(avatarToEdit).Property(item => item).IsModified = true;
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Supprime un avatar
         /// </summary>
         /// <param name="id">Identifiant de l'avatar à supprimer</param>
-        public void DeleteAvatarById(Guid id)
+        public async Task<bool> DeleteById(Guid id)
         {
-            Avatar avatarToDelete = this._context.Avatars.SingleOrDefault(e => e.Id == id);
+            bool result = false;
+
+            var avatarToDelete = await _context.Avatars
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (avatarToDelete != null)
             {
-                this._context.Avatars.Remove(avatarToDelete);
-                this._context.SaveChanges();
+                _context.Entry(avatarToDelete).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                result = true;
             }
+
+            return result;
         }
         #endregion
     }

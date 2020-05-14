@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data.DataLayer
@@ -28,10 +29,10 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer tous les choix
         /// </summary>
 
-        public List<Choice> GetAllChoices()
+        public async Task<List<Choice>> GetAll()
         {
-            return this._context.Choices
-                .ToList();
+            return await this._context.Choices
+                .ToListAsync();
         }
 
         /// <summary>
@@ -39,45 +40,53 @@ namespace treasurehunt.Core.Data.DataLayer
         /// </summary>
         /// <param name="id">Identifiant du choix</param>
         /// <returns></returns>
-        public Choice GetChoiceById(int id)
+        public async Task<Choice> GetById(int id)
         {
-            return this._context.Choices
-                                .First(item => item.Id == id);
+            return await this._context.Choices
+                                .FirstAsync(item => item.Id == id);
         }
 
         /// <summary>
         /// Ajoute et sauvegarde un nouveau choix
         /// </summary>
         /// <param name="choiceToAdd"></param>
-        public void AddChoice(Choice choiceToAdd)
+        public async Task Add(Choice choiceToAdd)
         {
             this._context.Choices.Add(choiceToAdd);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Edit et sauvegarde un nouveau choix
         /// </summary>
         /// <param name="choiceToEdit"></param>
-        public void EditChoice(Choice choiceToEdit)
+        public async Task Edit(Choice choiceToEdit)
         {
             this._context.Attach<Choice>(choiceToEdit);
             this._context.Entry(choiceToEdit).Property(item => item).IsModified = true;
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Supprime un choix
         /// </summary>
         /// <param name="id">Identifiant du choix à supprimer</param>
-        public void DeleteChoiceById(int id)
+        public async Task<bool> DeleteById(int id)
         {
-            Choice choiceToDelete = this._context.Choices.SingleOrDefault(e => e.Id == id);
+            bool result = false;
+
+            var choiceToDelete = await _context.Choices
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (choiceToDelete != null)
             {
-                this._context.Choices.Remove(choiceToDelete);
-                this._context.SaveChanges();
+                _context.Entry(choiceToDelete).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                result = true;
             }
+
+            return result;
         }
         #endregion
     }

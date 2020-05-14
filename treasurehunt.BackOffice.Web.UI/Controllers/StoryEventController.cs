@@ -12,32 +12,29 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
     public class StoryEventController : Controller
     {
         #region Champs privés
-        private DalStoryEvent _context = null;
+        private readonly DalStoryEvent _dalStoryEvent = null;
         #endregion
 
         #region Constructors
         public StoryEventController(DalStoryEvent context)
         {
-            this._context = context;
+            this._dalStoryEvent = context;
         }
         #endregion
 
-        public IActionResult Index()
+        // GET ALL : Story Event
+        public async Task<IActionResult> Index()
         {
-            List<StoryEvent> storyEvents = this._context.GetAllEvent();
 
-            return View(storyEvents);
+            return View(await this._dalStoryEvent.GetAll());
         }
 
-        public IActionResult EventBoard(int id)
+        //GET : Story Event
+        public async Task<IActionResult> EventBoard(int id)
         {
 
-            StoryEvent storyEvent = this._context.GetEventById(id);
-
-            //TempData for create and edit choices
-            TempData["EventFromBoard"] = JsonConvert.SerializeObject(storyEvent);
-            TempData["ListOfEvents"] = JsonConvert.SerializeObject(this._context.GetAllEvent());
-
+            StoryEvent storyEvent = await this._dalStoryEvent.GetById(id);
+        
             if (storyEvent == null)
             {
                 return NotFound();
@@ -46,28 +43,31 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
             return View(storyEvent);
         }
 
+        //CREATE : new Story Event
         public IActionResult Create()
         {
             return View();
         }
 
+        //CREATE POST : new Story Event
         [HttpPost]
-        public IActionResult CreatePost(StoryEvent eventToCreate)
+        public async Task<IActionResult> CreatePost(StoryEvent eventToCreate)
         {
             IActionResult result = this.View(eventToCreate);
 
             if (ModelState.IsValid)
             {
-                this._context.AddEvent(eventToCreate);
+                await this._dalStoryEvent.Add(eventToCreate);
                 result = RedirectToAction("Index");
             }
 
             return result;
         }
 
-        public IActionResult Edit(int id)
+        //EDIT : Story Event
+        public async Task<IActionResult> Edit(int id)
         {
-            StoryEvent eventToEdit = this._context.GetEventById(id);     
+            StoryEvent eventToEdit = await this._dalStoryEvent.GetById(id);     
 
             if(eventToEdit == null)
             {
@@ -77,14 +77,15 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
             return View(eventToEdit);
         }
 
+        //EDIT POST : Story Event
         [HttpPost]
-        public IActionResult EditPost(StoryEvent eventToEdit)
+        public async Task<IActionResult> EditPost(StoryEvent eventToEdit)
         {
             IActionResult result = this.View(eventToEdit);
 
             if (ModelState.IsValid)
             {
-                this._context.EditEvent(eventToEdit);
+                await this._dalStoryEvent.Edit(eventToEdit);
                 result = RedirectToAction("Index");
             }
             return result;

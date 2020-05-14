@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using treasurehunt.Core.Data.Models.Characters;
 
 namespace treasurehunt.Core.Data.DataLayer
@@ -26,9 +28,9 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer tous les énnemis du jeu
         /// </summary>
 
-        public List<Enemy> GetAllEnemies()
+        public async Task<List<Enemy>> GetAll()
         {
-            return this._context.Enemies.ToList();
+            return await this._context.Enemies.ToListAsync();
         }
 
         /// <summary>
@@ -36,45 +38,53 @@ namespace treasurehunt.Core.Data.DataLayer
         /// </summary>
         /// <param name="id">Identifiant de l'enemi recherchée</param>
         /// <returns></returns>
-        public Enemy GetEnemyById(Guid id)
+        public async Task<Enemy> GetById(Guid id)
         {
-            return this._context.Enemies
-                                .First(item => item.Id == id);
+            return await this._context.Enemies
+                                .FirstAsync(item => item.Id == id);
         }
 
         /// <summary>
         /// Ajoute et sauvegarde une nouvelle énnemi
         /// </summary>
         /// <param name="enemyToAdd"></param>
-        public void Add(Enemy enemyToAdd)
+        public async Task Add(Enemy enemyToAdd)
         {
             this._context.Enemies.Add(enemyToAdd);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Edit et sauvegarde un nouvel énnemi
         /// </summary>
         /// <param name="enemyToEdit"></param>
-        public void Edit(Enemy enemyToEdit)
+        public async Task Edit(Enemy enemyToEdit)
         {
             this._context.Attach<Enemy>(enemyToEdit);
             this._context.Entry(enemyToEdit).Property(item => item).IsModified = true;
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Supprime un ennemi
         /// </summary>
-        /// <param name="id">Identifiant de la question à supprimer</param>
-        public void DeleteQuestionById(Guid id)
+        /// <param name="id">Identifiant de l'ennemi à supprimer</param>
+        public async Task<bool> DeleteById(Guid id)
         {
-            Enemy enemyToDelete = this._context.Enemies.SingleOrDefault(e => e.Id == id);
-            if (enemyToDelete != null)
+            bool result = false;
+
+            var heroToDelete = await _context.Enemies
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (heroToDelete != null)
             {
-                this._context.Enemies.Remove(enemyToDelete);
-                this._context.SaveChanges();
+                _context.Entry(heroToDelete).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                result = true;
             }
+
+            return result;
         }
         #endregion
     }

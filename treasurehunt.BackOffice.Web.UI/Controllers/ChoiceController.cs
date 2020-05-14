@@ -13,49 +13,44 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
     public class ChoiceController : Controller
     {
         #region Champs privés
-        private DalChoice _context = null;
+        private DalChoice _dalChoice = null;
         #endregion
 
         #region Constructors
         public ChoiceController(DalChoice context)
         {
-            this._context = context;
+            this._dalChoice = context;
         }
         #endregion
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-
-        public IActionResult Create(string titleOfEvent, string numberOfEvent)
+        public async Task<IActionResult> Create([FromServices] DalStoryEvent dalStoryEvent, int idStoryEvent)
         {
-            ViewBag.EventForChoice = JsonConvert.DeserializeObject<StoryEvent>(TempData["EventFromBoard"].ToString());
-            ViewBag.ListOfEvents = JsonConvert.DeserializeObject<List<StoryEvent>>(TempData["ListOfEvents"].ToString());
+            ViewBag.EventForChoice = await dalStoryEvent.GetById(idStoryEvent);
+            ViewBag.ListOfEvents =await  dalStoryEvent.GetAll();
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreatePost(Choice choiceForQuestion)
+        public async Task<IActionResult> CreatePost(Choice choiceForQuestion)
         {
             IActionResult result = this.View(choiceForQuestion);
 
             if (ModelState.IsValid)
             {
-                this._context.AddChoice(choiceForQuestion);
+                await this._dalChoice.Add(choiceForQuestion);
                 result = RedirectToAction("EventBoard", "StoryEvent", new { id = choiceForQuestion.StoryEventId });
             }
 
             return result;
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit([FromServices] DalStoryEvent dalStoryEvent,int idChoice, int idStoryEvent)
         {
-            Choice choiceToEdit = this._context.GetChoiceById(id);
+            Choice choiceToEdit = await this._dalChoice.GetById(idChoice);
 
-            ViewBag.EventForChoice = JsonConvert.DeserializeObject<StoryEvent>(TempData["EventFromBoard"].ToString());
-            ViewBag.ListOfEvents = JsonConvert.DeserializeObject<List<StoryEvent>>(TempData["ListOfEvents"].ToString());
+            ViewBag.EventForChoice = await dalStoryEvent.GetById(idStoryEvent);
+            ViewBag.ListOfEvents = await dalStoryEvent.GetAll();
 
             if (choiceToEdit == null)
             {
@@ -66,13 +61,13 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditPost(Choice choiceToEdit)
+        public async Task<IActionResult> EditPost(Choice choiceToEdit)
         {
             IActionResult result = this.View(choiceToEdit);
 
             if (ModelState.IsValid)
             {
-                this._context.EditChoice(choiceToEdit);
+                await this._dalChoice.Edit(choiceToEdit);
                 result = RedirectToAction("EventBoard", "StoryEvent", new { id = choiceToEdit.StoryEventId });
             }
             return result;

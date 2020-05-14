@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data.DataLayer
@@ -27,11 +28,11 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer toutes les questions et leur choix associés
         /// </summary>
 
-        public List<Question> GetAllQuestion()
+        public async Task<List<Question>> GetAll()
         {
-            return this._context.Questions
+            return await this._context.Questions
                                 .Include(e => e.ChoicesEvent)
-                                .ToList();
+                                .ToListAsync();
         }
 
         /// <summary>
@@ -39,46 +40,54 @@ namespace treasurehunt.Core.Data.DataLayer
         /// </summary>
         /// <param name="id">Identifiant d'un question recherchée</param>
         /// <returns></returns>
-        public Question GetQuestionById(int id)
+        public async Task<Question> GetById(int id)
         {
-            return this._context.Questions
+            return await this._context.Questions
                                 .Include(e => e.ChoicesEvent)
-                                .First(item => item.Id == id);
+                                .FirstAsync(item => item.Id == id);
         }
 
         /// <summary>
         /// Ajoute et sauvegarde une nouvelle question
         /// </summary>
         /// <param name="questionToAdd"></param>
-        public void AddQuestion(Question questionToAdd)
+        public async Task Add(Question questionToAdd)
         {
             this._context.Questions.Add(questionToAdd);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Edit et sauvegarde une nouvelle question
         /// </summary>
         /// <param name="questionToEdit"></param>
-        public void EditQuestion(Question questionToEdit)
+        public async Task Edit(Question questionToEdit)
         {
             this._context.Attach<Question>(questionToEdit);
             this._context.Entry(questionToEdit).Property(item => item).IsModified = true;
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Supprime une question
         /// </summary>
         /// <param name="id">Identifiant de la question à supprimer</param>
-        public void DeleteQuestionById(int id)
+        public async Task<bool> DeleteById(int id)
         {
-            Question questionToDelete = this._context.Questions.SingleOrDefault(e => e.Id == id);
+            bool result = false;
+
+            var questionToDelete = await _context.Questions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (questionToDelete != null)
             {
-                this._context.Questions.Remove(questionToDelete);
-                this._context.SaveChanges();
+                _context.Entry(questionToDelete).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                result = true;
             }
+
+            return result;
         }
         #endregion
     }

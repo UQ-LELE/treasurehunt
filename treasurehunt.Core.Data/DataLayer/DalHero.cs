@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using treasurehunt.Core.Data.Models.Characters;
 
 namespace treasurehunt.Core.Data.DataLayer
@@ -25,7 +27,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer tous les héros (joueurs)
         /// </summary>
 
-        public List<Hero> GetAllHeroes()
+        public List<Hero> GetAll()
         {
             return this._context.Heroes.ToList();
         }
@@ -35,45 +37,53 @@ namespace treasurehunt.Core.Data.DataLayer
         /// </summary>
         /// <param name="id">Identifiant du héro recherché</param>
         /// <returns></returns>
-        public Hero GetHeroById(Guid id)
+        public async Task<Hero> GetById(Guid id)
         {
-            return this._context.Heroes
-                                .First(item => item.Id == id);
+            return await this._context.Heroes
+                                .FirstAsync(item => item.Id == id);
         }
 
         /// <summary>
         /// Ajoute et sauvegarde un héro (joueur)
         /// </summary>
         /// <param name="heroToAdd"></param>
-        public void Add(Hero heroToAdd)
+        public async Task Add(Hero heroToAdd)
         {
             this._context.Heroes.Add(heroToAdd);
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Edit et sauvegarde un nouvel héro (joueur)
         /// </summary>
         /// <param name="heroToEdit"></param>
-        public void Edit(Hero heroToEdit)
+        public async Task Edit(Hero heroToEdit)
         {
             this._context.Attach<Hero>(heroToEdit);
             this._context.Entry(heroToEdit).Property(item => item).IsModified = true;
-            this._context.SaveChanges();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
-        /// Supprime une question
+        /// Supprime un héro
         /// </summary>
-        /// <param name="id">Identifiant de la question à supprimer</param>
-        public void DeleteHeroById(Guid id)
+        /// <param name="id">Identifiant du héro à supprimer</param>
+        public async Task<bool> DeleteById(Guid id)
         {
-            Hero heroToDelete = this._context.Heroes.SingleOrDefault(e => e.Id == id);
+            bool result = false;
+
+            var heroToDelete = await _context.Heroes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (heroToDelete != null)
             {
-                this._context.Heroes.Remove(heroToDelete);
-                this._context.SaveChanges();
+                _context.Entry(heroToDelete).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+                result = true;
             }
+
+            return result;
         }
         #endregion
     }

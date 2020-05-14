@@ -12,46 +12,42 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
     public class QuestionController : Controller
     {
         #region Champs privés
-        private DalQuestion _context = null;
+        private DalQuestion _dalQuestion = null;
         #endregion
 
         #region Constructors
         public QuestionController(DalQuestion context)
         {
-            this._context = context;
+            this._dalQuestion = context;
         }
         #endregion
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-        public IActionResult Create(StoryEvent eventForQuestion)
+        public IActionResult Create([FromServices] DalStoryEvent dalStoryEvent, int idStoryEvent)
         {
-            ViewBag.EventForQuestion = eventForQuestion;
+            ViewBag.EventForQuestion = dalStoryEvent.GetById(idStoryEvent);
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreatePost(Question questionForEvent)
+        public async Task<IActionResult> CreatePost(Question questionForEvent)
         {
             IActionResult result = this.View(questionForEvent);
 
             if (ModelState.IsValid)
             {
-                this._context.AddQuestion(questionForEvent);
+                await this._dalQuestion.Add(questionForEvent);
                 result = RedirectToAction("EventBoard", "StoryEvent", new { id = questionForEvent.StoryEventId });
             }
 
             return result;
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit([FromServices] DalStoryEvent dalStoryEvent, int idQuestion, int idStoryEvent)
         {
-            Question questionToEdit = this._context.GetQuestionById(id);
+            Question questionToEdit = await this._dalQuestion.GetById(idQuestion);
 
-            ViewBag.EventForQuestion = JsonConvert.DeserializeObject<StoryEvent>(TempData["EventFromBoard"].ToString());
+            ViewBag.EventForQuestion = await dalStoryEvent.GetById(idStoryEvent);
 
             if (questionToEdit == null)
             {
@@ -62,13 +58,13 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditPost(Question questionToEdit)
+        public async Task<IActionResult> EditPost(Question questionToEdit)
         {
             IActionResult result = this.View(questionToEdit);
 
             if (ModelState.IsValid)
             {
-                this._context.EditQuestion(questionToEdit);
+                await this._dalQuestion.Edit(questionToEdit);
                 result = RedirectToAction("EventBoard", "StoryEvent", new { id = questionToEdit.StoryEventId });
             }
             return result;

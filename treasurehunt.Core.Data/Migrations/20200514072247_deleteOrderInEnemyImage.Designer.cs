@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using treasurehunt.Core.Data;
 
 namespace treasurehunt.Core.Data.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20200514072247_deleteOrderInEnemyImage")]
+    partial class deleteOrderInEnemyImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Health")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDead")
@@ -68,9 +67,6 @@ namespace treasurehunt.Core.Data.Migrations
                     b.Property<int>("Health")
                         .HasColumnType("int");
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDead")
                         .HasColumnType("bit");
 
@@ -102,9 +98,6 @@ namespace treasurehunt.Core.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Health")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDead")
@@ -146,6 +139,46 @@ namespace treasurehunt.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ItemsOnGame");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Pictures.AvatarImage", b =>
+                {
+                    b.Property<int>("AvatarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("AvatarId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AvatarId", "ImageId");
+
+                    b.HasIndex("AvatarId1");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("AvatarImage");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Pictures.EnemyImage", b =>
+                {
+                    b.Property<int>("EnemyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("EnemyId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EnemyId", "ImageId");
+
+                    b.HasIndex("EnemyId1");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("EnemyImage");
                 });
 
             modelBuilder.Entity("treasurehunt.Core.Data.Models.Pictures.Image", b =>
@@ -237,6 +270,32 @@ namespace treasurehunt.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StoryEvents");
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Pictures.AvatarImage", b =>
+                {
+                    b.HasOne("treasurehunt.Core.Data.Models.Characters.Avatar", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId1");
+
+                    b.HasOne("treasurehunt.Core.Data.Models.Pictures.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("treasurehunt.Core.Data.Models.Pictures.EnemyImage", b =>
+                {
+                    b.HasOne("treasurehunt.Core.Data.Models.Characters.Enemy", "Enemy")
+                        .WithMany()
+                        .HasForeignKey("EnemyId1");
+
+                    b.HasOne("treasurehunt.Core.Data.Models.Pictures.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("treasurehunt.Core.Data.Models.Quest.Choice", b =>
