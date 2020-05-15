@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using treasurehunt.Core.Data.Models.ItemsOnGame;
 
@@ -8,16 +9,12 @@ namespace treasurehunt.Core.Data.Models.Characters
     [Table("Heroes")]
     public class Hero : Character
     {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Le nom est requis")]
+        [StringLength(20, ErrorMessage = "Le nom est limité à 20 charactères maximum")]
+        public string Name { get; set; }
+
+        [NotMapped]
         public bool IsPoisoned { get; set; }
-
-        [NotMapped]
-        public List<ItemOnGame> ItemsOnBag { get; set; }
-
-        [NotMapped]
-        public List<string> HisPath { get; set; }
-
-        [NotMapped]
-        public List<string> HisChoices { get; set; }
 
         public Hero() { }
         public Hero(string name, int health, int attack, string race)
@@ -31,9 +28,13 @@ namespace treasurehunt.Core.Data.Models.Characters
             this.HisChoices = new List<string>();
         }
 
-        public override string SpecialAbility()
-        {
-            throw new NotImplementedException();
-        }
+        [NotMapped]
+        public List<ItemOnGame> ItemsOnBag { get; set; }
+
+        [NotMapped]
+        public List<string> HisPath { get; set; }
+
+        [NotMapped]
+        public List<string> HisChoices { get; set; }
     }
 }

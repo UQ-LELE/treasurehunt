@@ -68,8 +68,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="eventToEdit">évènement à modifier</param>
         public async Task Edit(StoryEvent eventToEdit)
         {
-            this._context.Attach<StoryEvent>(eventToEdit);
-            this._context.Entry(eventToEdit).Property(item => item).IsModified = true;
+            this._context.Update(eventToEdit);
             await this._context.SaveChangesAsync();
         }
 

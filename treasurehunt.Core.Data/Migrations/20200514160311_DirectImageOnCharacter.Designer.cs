@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using treasurehunt.Core.Data;
 
 namespace treasurehunt.Core.Data.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20200514160311_DirectImageOnCharacter")]
+    partial class DirectImageOnCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +36,17 @@ namespace treasurehunt.Core.Data.Migrations
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("IsDead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHero")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Race")
                         .IsRequired()
@@ -60,6 +73,17 @@ namespace treasurehunt.Core.Data.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<bool>("IsDead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHero")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
                     b.Property<string>("Race")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -84,6 +108,15 @@ namespace treasurehunt.Core.Data.Migrations
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("IsDead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHero")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPoisoned")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

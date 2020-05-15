@@ -42,7 +42,7 @@
 
                 @foreach (var choice in Model.QuestionEvent.ChoicesEvent)
                 {
-                    <li class="collection-item"><div>@choice.Description /@choice.StoryEventId<a asp-controller="Choice" asp-action="Edit" asp-route-idChoice="@choice.Id" asp-route-idStoryEvent="@Model.Id" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                    <li class="collection-item"><div>@choice.Description /@choice.StoryEventId<a asp-controller="Choice" asp-action="Edit" asp-route-idChoice="@choice.Id" asp-route-idStoryEvent="@Model.Id" class="secondary-content"><i class="material-icons">edit</i></a>|<a asp-controller="Choice" asp-action="Delete" asp-route-idChoice="@choice.Id" asp-route-idStoryEvent="@Model.Id" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
                 }
 
             }

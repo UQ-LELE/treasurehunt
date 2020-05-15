@@ -1,0 +1,45 @@
+﻿@model IEnumerable<treasurehunt.Core.Data.Models.Characters.Avatar>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="center-align">Avatars</h2>
+<div class="divider"></div>
+
+<!--button to create new avatar-->
+<div class="center-align ">
+    <a asp-action="Create" class="waves-effect waves-light btn">Create an avatar</a>
+</div>
+<div class="divider"></div>
+
+<!--cards for each avatar-->
+<div class="row">
+    @foreach (var avatar in Model)
+    {
+        <div class="col s12 m4">
+            <div class="card sticky-action">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img src="data:image/jpg;base64,@Convert.ToBase64String(avatar.Image)">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">@avatar.Race<i class="material-icons right">more_vert</i></span>
+                    <a asp-action="Edit" asp-route-id="@avatar.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@avatar.Id">Delete</a>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">@avatar.Race<i class="material-icons right">close</i></span>
+                    <div class="section">
+                        <h6>Health :</h6>
+                        <p>@avatar.Health points</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="section">
+                        <h6>Attack :</h6>
+                        <p>@avatar.Attack points</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

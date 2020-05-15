@@ -7,9 +7,6 @@ namespace treasurehunt.Core.Data.Models.Characters
 {
     public class Avatar : Character
     {
-        public override string SpecialAbility()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

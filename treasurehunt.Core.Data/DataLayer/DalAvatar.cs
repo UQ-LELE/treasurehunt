@@ -41,7 +41,7 @@ namespace treasurehunt.Core.Data.DataLayer
         public async Task<Avatar> GetById(Guid id)
         {
             return await this._context.Avatars
-                                .FirstAsync(item => item.Id == id);
+                                .FirstOrDefaultAsync(item => item.Id == id);
         }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="avatarToAdd"></param>
         public async Task Add(Avatar avatarToAdd)
         {
+            //avatarToAdd.Id = Guid.NewGuid();
             this._context.Avatars.Add(avatarToAdd);
             await this._context.SaveChangesAsync();
         }
@@ -60,8 +61,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="avatarToEdit"></param>
         public async Task Edit(Avatar avatarToEdit)
         {
-            this._context.Attach<Avatar>(avatarToEdit);
-            this._context.Entry(avatarToEdit).Property(item => item).IsModified = true;
+            this._context.Update(avatarToEdit);
             await this._context.SaveChangesAsync();
         }
 
@@ -85,6 +85,11 @@ namespace treasurehunt.Core.Data.DataLayer
             }
 
             return result;
+        }
+
+        public bool AvatarExists(Guid id)
+        {
+           return  _context.Avatars.Any(e => e.Id == id);
         }
         #endregion
     }

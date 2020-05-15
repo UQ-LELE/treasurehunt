@@ -1,17 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace treasurehunt.Core.Data.Models.Characters
 {
 
     public abstract class Character
     {
-        public Guid Id { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Le nom est requis")]
-        [StringLength(20, ErrorMessage = "Le nom est limité à 20 charactères maximum")]
-        public string Name { get; set; }
+        public Guid Id { get; set; }     
 
         [Required]     
         public string Race { get; set; }
@@ -23,17 +19,10 @@ namespace treasurehunt.Core.Data.Models.Characters
         [Required]
         [Range(1, 100)]
         public int Attack { get; set; }
+        
+        public byte[] Image { get; set; }
 
-        [Required]
+        [NotMapped]
         public bool IsDead { get; set; }
-
-        [Required]
-        public bool IsHero { get; set; }
-
-        public int ImageId { get; set; }
-
-        public abstract string SpecialAbility();
-
-
     }
 }

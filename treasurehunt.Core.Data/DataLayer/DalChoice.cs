@@ -43,7 +43,7 @@ namespace treasurehunt.Core.Data.DataLayer
         public async Task<Choice> GetById(int id)
         {
             return await this._context.Choices
-                                .FirstAsync(item => item.Id == id);
+                                .FirstOrDefaultAsync(item => item.Id == id);
         }
 
         /// <summary>
@@ -62,8 +62,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="choiceToEdit"></param>
         public async Task Edit(Choice choiceToEdit)
         {
-            this._context.Attach<Choice>(choiceToEdit);
-            this._context.Entry(choiceToEdit).Property(item => item).IsModified = true;
+            this._context.Update(choiceToEdit);
             await this._context.SaveChangesAsync();
         }
 

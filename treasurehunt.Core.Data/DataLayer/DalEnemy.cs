@@ -41,7 +41,7 @@ namespace treasurehunt.Core.Data.DataLayer
         public async Task<Enemy> GetById(Guid id)
         {
             return await this._context.Enemies
-                                .FirstAsync(item => item.Id == id);
+                                .FirstOrDefaultAsync(item => item.Id == id);
         }
 
         /// <summary>
@@ -60,8 +60,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="enemyToEdit"></param>
         public async Task Edit(Enemy enemyToEdit)
         {
-            this._context.Attach<Enemy>(enemyToEdit);
-            this._context.Entry(enemyToEdit).Property(item => item).IsModified = true;
+            this._context.Update(enemyToEdit);
             await this._context.SaveChangesAsync();
         }
 
@@ -85,6 +84,11 @@ namespace treasurehunt.Core.Data.DataLayer
             }
 
             return result;
+        }
+
+        public bool EnemyExists(Guid id)
+        {
+            return _context.Avatars.Any(e => e.Id == id);
         }
         #endregion
     }

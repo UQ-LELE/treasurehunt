@@ -1,94 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using treasurehunt.Core.Data;
-using treasurehunt.Core.Data.Models.Pictures;
+using treasurehunt.Core.Data.DataLayer;
+using treasurehunt.Core.Data.Models.Characters;
 
 namespace treasurehunt.BackOffice.Web.UI.Controllers
 {
-    public class ImagesController : Controller
+    public class HeroesController : Controller
     {
-        private readonly DefaultContext _context;
+        private readonly DalHero _dalHero;
 
-        public ImagesController(DefaultContext context)
+        public HeroesController(DalHero context)
         {
-            _context = context;
+            _dalHero = context;
         }
 
-        // GET: Images
+        // GET: Heroes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Images.ToListAsync());
+            return View(await _dalHero.GetAll());
         }
 
-        // GET: Images/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Heroes/Details/5
+        public async Task<IActionResult> Details(Guid id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (image == null)
+            var hero = await _dalHero.GetById(id);
+            if (hero == null)
             {
                 return NotFound();
             }
 
-            return View(image);
+            return View(hero);
         }
 
-        // GET: Images/Create
+        // GET: Heroes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Images/Create
+        // POST: Heroes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageTitle,ImageData")] Image image)
+        public async Task<IActionResult> Create(Hero hero, List<IFormFile> Image)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(image);
-                await _context.SaveChangesAsync();
+                foreach(var item in Image)
+                {
+                    if (item.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            hero.Image = stream.ToArray();
+                            await _dalHero.Add(hero);
+                        }
+                    }
+                }
+              
                 return RedirectToAction(nameof(Index));
             }
-            return View(image);
+            return View(hero);
         }
 
-        // GET: Images/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Heroes/Edit/5
+        public async Task<IActionResult> Edit(Guid id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var image = await _context.Images.FindAsync(id);
-            if (image == null)
+            var hero = await _dalHero.GetById(id);
+            if (hero == null)
             {
                 return NotFound();
             }
-            return View(image);
+            return View(hero);
         }
 
-        // POST: Images/Edit/5
+        // POST: Heroes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageTitle,ImageData")] Image image)
+        public async Task<IActionResult> Edit(Guid id, [Bind("IsPoisoned,Id,Name,Race,Health,Attack,IsDead,IsHero,ImageId")] Hero hero)
         {
-            if (id != image.Id)
+            if (id != hero.Id)
             {
                 return NotFound();
             }
@@ -97,12 +110,12 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
             {
                 try
                 {
-                    _context.Update(image);
-                    await _context.SaveChangesAsync();
+               
+                    await _dalHero.Edit(hero);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ImageExists(image.Id))
+                    if (!HeroExists(hero.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +126,39 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(image);
+            return View(hero);
         }
 
-        // GET: Images/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Heroes/Delete/5
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (image == null)
+            var hero = await _dalHero.GetById(id);
+            if (hero == null)
             {
                 return NotFound();
             }
 
-            return View(image);
+            return View(hero);
         }
 
-        // POST: Images/Delete/5
+        // POST: Heroes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var image = await _context.Images.FindAsync(id);
-            _context.Images.Remove(image);
-            await _context.SaveChangesAsync();
+
+            await _dalHero.DeleteById(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ImageExists(int id)
+        private bool HeroExists(Guid id)
         {
-            return _context.Images.Any(e => e.Id == id);
+            return _dalHero.HeroExists(id);
         }
     }
 }

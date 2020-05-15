@@ -27,9 +27,9 @@ namespace treasurehunt.Core.Data.DataLayer
         /// Récupérer tous les héros (joueurs)
         /// </summary>
 
-        public List<Hero> GetAll()
+        public async Task<List<Hero>> GetAll()
         {
-            return this._context.Heroes.ToList();
+            return await this._context.Heroes.ToListAsync();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace treasurehunt.Core.Data.DataLayer
         public async Task<Hero> GetById(Guid id)
         {
             return await this._context.Heroes
-                                .FirstAsync(item => item.Id == id);
+                                .FirstOrDefaultAsync(item => item.Id == id);
         }
 
         /// <summary>
@@ -59,8 +59,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="heroToEdit"></param>
         public async Task Edit(Hero heroToEdit)
         {
-            this._context.Attach<Hero>(heroToEdit);
-            this._context.Entry(heroToEdit).Property(item => item).IsModified = true;
+            this._context.Update(heroToEdit);
             await this._context.SaveChangesAsync();
         }
 
@@ -84,6 +83,11 @@ namespace treasurehunt.Core.Data.DataLayer
             }
 
             return result;
+        }
+
+        public bool HeroExists(Guid id)
+        {
+            return _context.Heroes.Any(e => e.Id == id);
         }
         #endregion
     }

@@ -44,7 +44,7 @@ namespace treasurehunt.Core.Data.DataLayer
         {
             return await this._context.Questions
                                 .Include(e => e.ChoicesEvent)
-                                .FirstAsync(item => item.Id == id);
+                                .FirstOrDefaultAsync(item => item.Id == id);
         }
 
         /// <summary>
@@ -63,8 +63,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="questionToEdit"></param>
         public async Task Edit(Question questionToEdit)
         {
-            this._context.Attach<Question>(questionToEdit);
-            this._context.Entry(questionToEdit).Property(item => item).IsModified = true;
+            this._context.Update(questionToEdit);
             await this._context.SaveChangesAsync();
         }
 

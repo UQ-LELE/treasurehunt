@@ -26,13 +26,13 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         public async Task<IActionResult> Create([FromServices] DalStoryEvent dalStoryEvent, int idStoryEvent)
         {
             ViewBag.EventForChoice = await dalStoryEvent.GetById(idStoryEvent);
-            ViewBag.ListOfEvents =await  dalStoryEvent.GetAll();
+            ViewBag.ListOfEvents = await dalStoryEvent.GetAll();
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(Choice choiceForQuestion)
+        public async Task<IActionResult> Create(Choice choiceForQuestion)
         {
             IActionResult result = this.View(choiceForQuestion);
 
@@ -45,7 +45,7 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
             return result;
         }
 
-        public async Task<IActionResult> Edit([FromServices] DalStoryEvent dalStoryEvent,int idChoice, int idStoryEvent)
+        public async Task<IActionResult> Edit([FromServices] DalStoryEvent dalStoryEvent, int idChoice, int idStoryEvent)
         {
             Choice choiceToEdit = await this._dalChoice.GetById(idChoice);
 
@@ -61,7 +61,7 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(Choice choiceToEdit)
+        public async Task<IActionResult> Edit(Choice choiceToEdit)
         {
             IActionResult result = this.View(choiceToEdit);
 
@@ -71,6 +71,27 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
                 result = RedirectToAction("EventBoard", "StoryEvent", new { id = choiceToEdit.StoryEventId });
             }
             return result;
+        }
+
+        // GET: Enemies/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var enemy = await _dalChoice.GetById(id);
+            if (enemy == null)
+            {
+                return NotFound();
+            }
+
+            return View(enemy);
+        }
+
+        // POST: Enemies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var enemy = await _dalChoice.DeleteById(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

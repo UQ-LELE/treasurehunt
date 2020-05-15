@@ -17,6 +17,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Number</th>
             <th>Title</th>
             <th>Question</th>
             <th>Choices</th>
@@ -29,7 +30,8 @@
         {
             <tr>
                 <td>@storyEvent.Id</td>
-                <td><a asp-controller="StoryEvent" asp-action="EventBoard" asp-route-id="@storyEvent.Id">@storyEvent.Title</a></td>
+                <td><a asp-controller="StoryEvent" asp-action="Details" asp-route-id="@storyEvent.Id">@storyEvent.Number</a></td>
+                <td>@storyEvent.Title</td>
                 @if (storyEvent.QuestionEvent != null)
                 {
                     @if (storyEvent.QuestionEvent.Title != null)

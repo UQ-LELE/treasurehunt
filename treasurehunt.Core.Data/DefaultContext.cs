@@ -3,7 +3,6 @@ using System.Linq;
 using treasurehunt.Core.Data.Models;
 using treasurehunt.Core.Data.Models.Characters;
 using treasurehunt.Core.Data.Models.ItemsOnGame;
-using treasurehunt.Core.Data.Models.Pictures;
 using treasurehunt.Core.Data.Models.Quest;
 
 namespace treasurehunt.Core.Data
@@ -28,7 +27,6 @@ namespace treasurehunt.Core.Data
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<ItemOnGame> ItemsOnGame { get; set; }
-        public DbSet<Image> Images { get; set; }
 
         public object Enemy { get; set; }
 
