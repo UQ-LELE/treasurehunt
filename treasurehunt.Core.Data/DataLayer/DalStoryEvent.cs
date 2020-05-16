@@ -47,10 +47,24 @@ namespace treasurehunt.Core.Data.DataLayer
         public async Task<StoryEvent> GetById(int id)
         {
             return await this._context.StoryEvents
-                                .Include(e => e.QuestionEvent)
-                                .ThenInclude(e => e.ChoicesEvent)
-                                .FirstAsync(item => item.Id == id);
+                                .Include(s => s.QuestionEvent)
+                                .ThenInclude(s => s.ChoicesEvent)
+                                .FirstOrDefaultAsync(s => s.Id == id);
         }
+
+        /// <summary>
+        /// Retourne un enevement selon l'id d'un choix
+        /// </summary>
+        /// <param name="id">id du choix associé à l'évènement</param>
+        /// <returns></returns>
+        public async Task<StoryEvent> GetByChoice(int id)
+        {
+
+            return await this._context.StoryEvents.Where(s => s.ChoicesEvent.Any(c => c.Id == id))         
+                .FirstOrDefaultAsync();
+        }
+
+
 
         /// <summary>
         /// Ajoute et sauvegarde un nouvelle évènement
@@ -83,14 +97,14 @@ namespace treasurehunt.Core.Data.DataLayer
 
             var eventToDelete = await _context.StoryEvents
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (eventToDelete != null)
             {
                 _context.Entry(eventToDelete).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
                 result = true;
-            }           
+            }
 
             return result;
         }

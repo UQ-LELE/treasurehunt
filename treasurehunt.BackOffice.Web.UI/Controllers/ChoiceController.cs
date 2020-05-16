@@ -32,14 +32,14 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Choice choiceForQuestion)
+        public async Task<IActionResult> Create(Choice choiceForQuestion, int idStoryEvent)
         {
             IActionResult result = this.View(choiceForQuestion);
 
             if (ModelState.IsValid)
             {
                 await this._dalChoice.Add(choiceForQuestion);
-                result = RedirectToAction("EventBoard", "StoryEvent", new { id = choiceForQuestion.StoryEventId });
+                result = RedirectToAction("Details", "StoryEvent", new { IdStoryEvent = idStoryEvent });
             }
 
             return result;
@@ -61,37 +61,42 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Choice choiceToEdit)
+        public async Task<IActionResult> Edit(Choice choiceToEdit, int idStoryEvent)
         {
             IActionResult result = this.View(choiceToEdit);
 
             if (ModelState.IsValid)
             {
                 await this._dalChoice.Edit(choiceToEdit);
-                result = RedirectToAction("EventBoard", "StoryEvent", new { id = choiceToEdit.StoryEventId });
+                result = RedirectToAction("Details", "StoryEvent", new { IdStoryEvent = idStoryEvent });
             }
             return result;
         }
 
-        // GET: Enemies/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        // GET: Choices/Delete/5
+
+        public async Task<IActionResult> Delete([FromServices] DalStoryEvent dalStoryEvent, int id, int idStoryEvent)
         {
-            var enemy = await _dalChoice.GetById(id);
-            if (enemy == null)
+
+            var choice = await _dalChoice.GetById(id);
+            if (choice == null)
             {
                 return NotFound();
             }
 
-            return View(enemy);
+            ViewBag.EventOfChoice = await dalStoryEvent.GetById(idStoryEvent);
+
+
+            return View(choice);
         }
 
         // POST: Enemies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeletePost")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int idStoryEvent)
         {
             var enemy = await _dalChoice.DeleteById(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "StoryEvent", new { IdStoryEvent = idStoryEvent });
         }
     }
 }

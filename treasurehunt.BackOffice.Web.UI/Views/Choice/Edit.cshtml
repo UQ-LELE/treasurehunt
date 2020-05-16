@@ -10,7 +10,9 @@
 
 <h3 class="center-align">Edit choice for event number @eventForChoice.Number</h3>
 <div class="divider"></div>
+<a asp-action="Details" asp-controller="StoryEvent" asp-route-idStoryEvent="@eventForChoice.Id" class=" waves-light btn">Back to event</a>
 
+<div class="divider"></div>
 <div class="row">
     <!--Event info-->
     <div class="col s12 m6">
@@ -40,8 +42,10 @@
     <!--Choice form-->
     <div class="col s12 m6">
         <div class="box">
-            <form asp-action="Edit">
+            <form asp-action="Edit" asp-route-idStoryEvent="@eventForChoice.Id">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
                 <div class="row">
                     <div class="input-field col s12">
                         <input asp-for="Description" type="text" class="validate" />

@@ -2,7 +2,8 @@
 
 <h2 class="center-align">Edit event number @Model.Number</h2>
 <div class="divider"></div>
-
+<a asp-action="Details" asp-controller="StoryEvent" asp-route-idEvent="@Model.Id" class=" waves-light btn">Back to event</a>
+<div class="divider"></div>
 <!--Form to edit event-->
 <div class="row">
     <div class="col s12 center-align">
@@ -13,6 +14,7 @@
                     <input type="submit" value="Edit" class="btn btn-primary" />
                 </div>
             </div>
+            <input type="hidden" asp-for="Id" />
 
             <div class="row">
                 <div class="input-field col s2">

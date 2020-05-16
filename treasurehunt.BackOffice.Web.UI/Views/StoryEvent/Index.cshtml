@@ -30,7 +30,7 @@
         {
             <tr>
                 <td>@storyEvent.Id</td>
-                <td><a asp-controller="StoryEvent" asp-action="Details" asp-route-id="@storyEvent.Id">@storyEvent.Number</a></td>
+                <td><a asp-controller="StoryEvent" asp-action="Details" asp-route-idStoryEvent="@storyEvent.Id">@storyEvent.Number</a></td>
                 <td>@storyEvent.Title</td>
                 @if (storyEvent.QuestionEvent != null)
                 {
@@ -48,7 +48,10 @@
                         <td>
                             @foreach (var choice in storyEvent.QuestionEvent.ChoicesEvent)
                             {
-                                @choice.StoryEventId;
+                                <ul>
+                                    <li> @choice.StoryEventId</li>
+                                </ul>
+                               
                             }
                         </td>
                     }

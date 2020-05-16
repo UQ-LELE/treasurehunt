@@ -11,7 +11,7 @@ namespace treasurehunt.Core.Data.DataLayer
     public class DalAvatar
     {
         #region Fields
-        private DefaultContext _context = null;
+        private readonly DefaultContext _context = null;
         #endregion
 
         #region Constructors

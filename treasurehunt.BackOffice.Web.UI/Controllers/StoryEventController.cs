@@ -30,11 +30,16 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
         }
 
         //GET : Story Event
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? idStoryEvent)
         {
 
-            StoryEvent storyEvent = await this._dalStoryEvent.GetById(id);
-        
+            StoryEvent storyEvent = null;
+
+            if (idStoryEvent.HasValue)
+            {
+                storyEvent = await this._dalStoryEvent.GetById(idStoryEvent.Value);
+            }
+            
             if (storyEvent == null)
             {
                 return NotFound();

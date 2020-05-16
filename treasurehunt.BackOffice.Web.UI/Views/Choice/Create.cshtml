@@ -13,7 +13,9 @@
 
 <h3 class="center-align">Add a choice for to event</h3>
 <div class="divider"></div>
+<a asp-action="Details" asp-controller="StoryEvent" asp-route-idStoryEvent="@eventForChoice.Id" class=" waves-light btn">Back to event</a>
 
+<div class="divider"></div>
 <div class="row">
     <!--Event info-->
     <div class="col s12 m6">
@@ -43,7 +45,7 @@
     <!--Choice form-->
     <div class="col s12 m6">
         <div class="box">
-            <form asp-action="Create">
+            <form asp-action="Create" asp-route-idStoryEvent="@eventForChoice.Id">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="row">
                     <div class="input-field col s12">
@@ -63,7 +65,6 @@
                 <div class="input-field col s12" hidden>
                     <input asp-for="QuestionId" value="@eventForChoice.QuestionEvent.Id" />
                 </div>
-
                 <div class="form-group">
                     <input type="submit" value="Add choice" class="btn btn-primary" />
                 </div>
