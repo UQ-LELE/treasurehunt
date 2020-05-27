@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using treasurehunt.Core.Data;
+using treasurehunt.Core.Data.DataLayer;
 
 namespace treasurehunt.Web.UI
 {
@@ -29,6 +30,15 @@ namespace treasurehunt.Web.UI
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
 
             string connectionString = this.Configuration.GetConnectionString("DefaultContext");
+
+
+            services.AddTransient<DalStoryEvent, DalStoryEvent>();
+            services.AddTransient<DalChoice, DalChoice>();
+            services.AddTransient<DalQuestion, DalQuestion>();
+            services.AddTransient<DalItemOnGame, DalItemOnGame>();
+            services.AddTransient<DalEnemy, DalEnemy>();
+            services.AddTransient<DalAvatar, DalAvatar>();
+            services.AddTransient<DalHero, DalHero>();
 
             services.AddDbContext<DefaultContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 

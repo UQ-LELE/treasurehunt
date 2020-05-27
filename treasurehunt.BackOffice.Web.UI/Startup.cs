@@ -34,6 +34,7 @@ namespace treasurehunt.BackOffice.Web.UI
             services.AddTransient<DalStoryEvent, DalStoryEvent>();
             services.AddTransient<DalChoice, DalChoice>();
             services.AddTransient<DalQuestion, DalQuestion>();
+            services.AddTransient<DalItemOnGame, DalItemOnGame>();
             services.AddTransient<DalEnemy, DalEnemy>();
             services.AddTransient<DalAvatar, DalAvatar>();
             services.AddTransient<DalHero, DalHero>();

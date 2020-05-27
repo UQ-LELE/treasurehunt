@@ -44,6 +44,12 @@ namespace treasurehunt.Core.Data.DataLayer
                                 .FirstOrDefaultAsync(item => item.Id == id);
         }
 
+        public async Task<Avatar> GetByRace(string race)
+        {
+            return await this._context.Avatars
+                                .FirstOrDefaultAsync(item => item.Race == race);
+        }
+
         /// <summary>
         /// Ajoute et sauvegarde un nouvel avatar
         /// </summary>
@@ -61,7 +67,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="avatarToEdit"></param>
         public async Task Edit(Avatar avatarToEdit)
         {
-            this._context.Update(avatarToEdit);
+            this._context.Avatars.Update(avatarToEdit);
             await this._context.SaveChangesAsync();
         }
 

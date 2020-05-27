@@ -9,52 +9,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using treasurehunt.Core.Data;
 using treasurehunt.Core.Data.DataLayer;
-using treasurehunt.Core.Data.Models.Characters;
+using treasurehunt.Core.Data.Models.ItemsOnGame;
 
 namespace treasurehunt.BackOffice.Web.UI.Controllers
 {
-    public class EnemiesController : Controller
+    public class ItemOnGamesController : Controller
     {
-        private readonly DalEnemy _dalEnemy;
+        private readonly DalItemOnGame _dalItemOnGame;
 
-        public EnemiesController(DalEnemy context)
+        public ItemOnGamesController(DalItemOnGame context)
         {
-            _dalEnemy = context;
+            _dalItemOnGame = context;
         }
 
-        // GET: Enemies
+        // GET: ItemOnGames
         public async Task<IActionResult> Index()
         {
-            return View(await _dalEnemy.GetAll());
+            return View(await _dalItemOnGame.GetAll());
         }
 
-        // GET: Enemies/Details/5
-        public async Task<IActionResult> Details(Guid id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var enemy = await _dalEnemy.GetById(id);
-            if (enemy == null)
-            {
-                return NotFound();
-            }
-
-            return View(enemy);
-        }
-
-        // GET: Enemies/Create
+        
+        // GET: ItemOnGames/Create
         public IActionResult Create()
         {
             return View();
         }
 
-      
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Enemy enemy, List<IFormFile> Image)
+        public async Task<IActionResult> Create(ItemOnGame itemOnGame, List<IFormFile> Image)
         {
             if (ModelState.IsValid)
             {
@@ -65,41 +49,38 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
                         using (var stream = new MemoryStream())
                         {
                             await item.CopyToAsync(stream);
-                            enemy.Image = stream.ToArray();
-                            await _dalEnemy.Add(enemy);
+                            itemOnGame.Image = stream.ToArray();
+                            await _dalItemOnGame.Add(itemOnGame);
                         }
                     }
                 }
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(enemy);
+            return View(itemOnGame);
         }
 
-        // GET: Enemies/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        // GET: ItemOnGames/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var enemy = await _dalEnemy.GetById(id.Value);
-            if (enemy == null)
+            var itemOnGame = await _dalItemOnGame.GetById(id.Value);
+            if (itemOnGame == null)
             {
                 return NotFound();
             }
-            return View(enemy);
+            return View(itemOnGame);
         }
 
-        // POST: Enemies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Race,Health,Attack,IsDead,IsHero,ImageId")] Enemy enemy, List<IFormFile> Image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] ItemOnGame itemOnGame, List<IFormFile> Image)
         {
-            if (id != enemy.Id)
+            if (id != itemOnGame.Id)
             {
                 return NotFound();
             }
@@ -115,15 +96,15 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
                             using (var stream = new MemoryStream())
                             {
                                 await item.CopyToAsync(stream);
-                                enemy.Image = stream.ToArray();
-                                await _dalEnemy.Edit(enemy);
+                                itemOnGame.Image = stream.ToArray();
+                                await _dalItemOnGame.Edit(itemOnGame);
                             }
                         }
                     }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnemyExists(enemy.Id))
+                    if (!ItemOnGameExists(itemOnGame.Id))
                     {
                         return NotFound();
                     }
@@ -134,38 +115,38 @@ namespace treasurehunt.BackOffice.Web.UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(enemy);
+            return View(itemOnGame);
         }
 
-        // GET: Enemies/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+        // GET: ItemOnGames/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var enemy = await _dalEnemy.GetById(id);
-            if (enemy == null)
+            var itemOnGame = await _dalItemOnGame.GetById(id.Value);
+            if (itemOnGame == null)
             {
                 return NotFound();
             }
 
-            return View(enemy);
+            return View(itemOnGame);
         }
 
-        // POST: Enemies/Delete/5
+        // POST: ItemOnGames/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enemy = await _dalEnemy.DeleteById(id);
+            var enemy = await _dalItemOnGame.DeleteById(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnemyExists(Guid id)
+        private bool ItemOnGameExists(int id)
         {
-            return _dalEnemy.EnemyExists(id);
+            return _dalItemOnGame.ItemExists(id);
         }
     }
 }

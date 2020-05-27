@@ -10,7 +10,7 @@ namespace treasurehunt.Core.Data.Models.Characters
     public class Hero : Character
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Le nom est requis")]
-        [StringLength(20, ErrorMessage = "Le nom est limité à 20 charactères maximum")]
+        [StringLength(20, ErrorMessage = "Le nom est limité à 6 charactères maximum")]
         public string Name { get; set; }
 
         [NotMapped]

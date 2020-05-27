@@ -1,82 +1,86 @@
-﻿
+﻿@model treasurehunt.Core.Data.Models.GameViewModel
 
-@{
-    ViewData["Title"] = "Home Page";
-
-    treasurehunt.Core.Data.Models.Quetes.Evenement evenement = null;
-    evenement = ViewBag.Evenement;
-
-    List<treasurehunt.Core.Data.Models.Quetes.Choix> choices = null;
-    choices = ViewBag.Choix;
-
-    treasurehunt.Core.Data.Models.Quetes.Question question = null;
-    question = ViewBag.Question;
-
-    treasurehunt.Core.Data.Models.Personnages.Hero hero = null;
-    hero = ViewBag.Hero;
-
-}
-
-<div class="row">
-    <div class="col s12">
-        <div class="container center-align">
-
-            <div class="row">
-                <div class="card-panel teal">
-                    <span class="white-text">
-                        <p>
-                            @evenement.Description
-                        </p>
-                    </span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="card-panel teal center-align" style="padding:1px">
-                    <span class="white-text">
-                        <p>
-                            @question.LaQuestion
-                        </p>
-                    </span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="center-align">
-                    @if (!hero.IsDead)
+<div class="row pt-3" style="color:#242423;" >
+    <!--Event panel-->
+    <div class="col s6 offset-s1">
+        <!--StoryEvent-->
+        <div class="row">
+            <div class="card ivory z-depth-4">
+                <div class="card-content" style="font-style:italic">
+                    <!--Event description-->
+                    <p class="p-1" >@Model.StoryEvent.Title</p>
+                    <div class="divider"></div>
+                    <!--Event question-->
+                    @if (Model.StoryEvent.QuestionEvent != null)
                     {
-                        @foreach (var choice in choices)
-                        {
-                            <div class="col s4">
-                                <a asp-controller="Game" asp-action="Play" asp-route-choice="@choice.NexEventNumber" class="waves-effect waves-light btn">@choice.NexEventNumber</a>
-                            </div>
-                        }
-
-
-                        @if (evenement.Numero != "E100")
-                        {
-                            <div class="col s4">
-                                <a asp-controller="Game" asp-action="Play" asp-route-choice="EBACK" class="waves-effect waves-light btn">Revenir sur mes pas</a>
-                            </div>
-                        }
+                        <p class="p-1">@Model.StoryEvent.QuestionEvent.Title</p>
                     }
                 </div>
-
             </div>
         </div>
+
+        <!--Choices-->
+        @if (Model.StoryEvent.QuestionEvent != null && Model.StoryEvent.QuestionEvent.ChoicesEvent != null)
+        {
+            <div class="row center-align">
+                @foreach (var choice in Model.StoryEvent.QuestionEvent.ChoicesEvent)
+                {
+                    <a asp-action="Play" asp-route-id="@choice.StoryEventId" class="z-depth-4 waves-effect waves-light btn m-2">@choice.Description</a>
+                }
+                @if (Model.StoryEvent.Number != "E100" && Model.StoryEvent.Number != "E433" && Model.StoryEvent.Number != "E651")
+                {
+                    <a asp-action="Play" asp-route-back="EBACK" class="z-depth-4 waves-effect waves-light btn m-2">Revenir sur mes pas</a>
+                }
+            </div>
+        }
     </div>
 
-    <div class="row">
-        <div class="col s12">
-            @foreach (var path in @hero.HisPath)
-            {
-                @path
-            }
+    <!--Hero panel-->
+    <div class="col s3 offset-s1" style="color:white">
+        <!--Hero parameters-->
+        <div class="row box z-depth-4">
+            <!--Hero Image-->
+            <div class="col s6">
+                <div class="card z-depth-0">
+                    <div class="card-image">
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.HeroImage)" style="padding:5px;background-color:#333533;">
+                    </div>
+                </div>
+                @if (Model.Hero.IsPoisoned)
+                {
+                    <h6 class="m-0">Vous êtes empoisonné !</h6>
+                }
+            </div>
+
+            <!--Hero profil-->
+            <div class="col s6">
+                <h3 class="m-0">@Model.Hero.Name</h3>
+                <div class="divider"></div>
+                <h5><img src="~/Images/motivation.png" style="max-width:30px; float:left" />&nbsp;@Model.Hero.Attack points</h5>
+                <div class="divider"></div>
+                <h5><img src="~/Images/heart.png" style="max-width:30px; float:left" />&nbsp;@Model.Hero.Health points</h5>
+
+                <div class="progress">
+                    <div class="determinate" style="width: @Model.Hero.Health;"></div>
+                </div>
+               
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            @hero.Health
+
+        <!--Hero bag-->
+        <div class="row box">
+                    <h5 class="valign-wrapper"><img src="~/Images/school-bag.png" style="max-width:60px;" />&nbsp;Sacoche</h5>
+            <div class="divider"></div>
+            @foreach (var item in Model.Hero.ItemsOnBag)
+            {
+                <div class="col s4">
+                    <div class="card z-depth-2">
+                        <div class="card-image">
+                            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Image)" style="padding:5px;background-color:#CFDBD5;">
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>

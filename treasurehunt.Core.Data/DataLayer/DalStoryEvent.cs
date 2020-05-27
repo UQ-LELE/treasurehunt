@@ -64,7 +64,21 @@ namespace treasurehunt.Core.Data.DataLayer
                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Retourne un enevement selon son numéro
+        /// </summary>
+        /// <param name="id">numéro l'évènement</param>
+        /// <returns></returns>
+        public async Task<StoryEvent> GetByNumber(string number)
+        {
 
+            return await this._context.StoryEvents.Where(s => s.Number == number)
+                .Include(s => s.QuestionEvent)
+                .ThenInclude(s => s.ChoicesEvent)
+                .FirstOrDefaultAsync();
+        }
+
+        
 
         /// <summary>
         /// Ajoute et sauvegarde un nouvelle évènement
@@ -82,7 +96,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="eventToEdit">évènement à modifier</param>
         public async Task Edit(StoryEvent eventToEdit)
         {
-            this._context.Update(eventToEdit);
+            this._context.StoryEvents.Update(eventToEdit);
             await this._context.SaveChangesAsync();
         }
 

@@ -16,5 +16,7 @@
         /// Description de l'item on game
         /// </summary>
         public string Description { get; set; }
+
+        public byte[] Image { get; set; }
     }
 }

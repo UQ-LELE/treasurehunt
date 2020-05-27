@@ -9,7 +9,7 @@ namespace treasurehunt.Core.Data.Models.Characters
     {
         public Guid Id { get; set; }     
 
-        [Required]     
+        [Required(ErrorMessage ="Veuillez sélectionner un avatar")]     
         public string Race { get; set; }
 
         [Required]
@@ -20,8 +20,6 @@ namespace treasurehunt.Core.Data.Models.Characters
         [Range(1, 100)]
         public int Attack { get; set; }
         
-        public byte[] Image { get; set; }
-
         [NotMapped]
         public bool IsDead { get; set; }
     }

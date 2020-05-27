@@ -2,70 +2,163 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
+
+
+/* Custom colors
+-------------------------------------------------- */
+
+.gainsboro {
+    background-color: #CFDBD5;
+}
+
+.ivory {
+    background-color: #E8EDDF;
+}
+
+.maize {
+    background-color: #F5CB5C;
+}
+
+.raisinblack {
+    background-color: #242423;
+}
+
+.jet {
+    background-color: #333533;
+}
+
+/* Custom padding
+-------------------------------------------------- */
+
+.p-1 {
+    padding: 10px;
+}
+
+.p-2 {
+    padding: 20px;
+}
+
+.p-3 {
+    padding: 30px;
+}
+
+.pb-3{
+    padding-bottom:30px;
+}
+
+.pt-3{
+    padding-top:30px;
+}
+
+.m-0{
+    margin:0px;
+}
+.m-1 {
+    margin: 10px;
+}
+
+.m-2 {
+    margin: 20px;
+}
+
+.m-3 {
+    margin: 30px;
+}
+
+.m-4 {
+    margin: 40px;
+}
+
+
+.btn, .btn:hover, .btn-large:hover, .btn-small:hover {
+    background-color: #F5CB5C;
+    color:black;
+}
+
+.box {
+    margin: .1rem 0 1rem 0;
+    border: 1px solid #CFDBD5;
+    border-radius: 2px;
+    padding: 5px 5px;
+    background-color: #333533;
+}
+
+.progress {
+    background-color: #F5CB5C;
+}
+
+
+    .progress .indeterminate {
+        background-color: #CFDBD5;
+    }
+

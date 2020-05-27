@@ -62,7 +62,7 @@ namespace treasurehunt.Core.Data.DataLayer
         /// <param name="choiceToEdit"></param>
         public async Task Edit(Choice choiceToEdit)
         {
-            this._context.Update(choiceToEdit);
+            this._context.Choices.Update(choiceToEdit);
             await this._context.SaveChangesAsync();
         }
 
